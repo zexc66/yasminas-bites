@@ -1,10 +1,16 @@
 import Stripe from 'stripe'
 import { getProduct } from '@/lib/products'
-import { CartItem } from '@/types'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2026-05-27.dahlia' })
+let stripe: Stripe | null = null
+if (process.env.STRIPE_SECRET_KEY && !process.env.STRIPE_SECRET_KEY.startsWith('sk_test_...')) {
+  stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2026-05-27.dahlia' })
+}
 
 export async function POST(request: Request) {
+  if (!stripe) {
+    return Response.json({ error: 'Card payments not configured' }, { status: 503 })
+  }
+
   const { items } = await request.json() as { items: Array<{ id: string; quantity: number }> }
 
   if (!Array.isArray(items) || items.length === 0) {
