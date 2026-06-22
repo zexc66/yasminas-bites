@@ -22,6 +22,11 @@ export const metadata: Metadata = {
   title: "Yasmina's Bites — Little Bites of Happiness",
   description:
     'Artisan cookie cakes handcrafted with love. Chocolate chip, Biscoff caramel, pistachio, and more. Order yours today.',
+  icons: {
+    icon: '/images/logo.svg',
+    shortcut: '/images/logo.svg',
+    apple: '/images/logo.svg',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
