@@ -7,11 +7,15 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ShoppingBag, Menu, X, User } from 'lucide-react'
 import { useCart } from '@/lib/cartStore'
 import { useAuth } from '@/contexts/AuthContext'
+import { AnnouncementBar } from '@/components/ui/AnnouncementBar'
 
 const NAV_LINKS = [
-  { href: '/shop',     label: 'Shop'      },
-  { href: '/#about',   label: 'Our Story' },
-  { href: '/#contact', label: 'Contact'   },
+  { href: '/shop',          label: 'Shop'          },
+  { href: '/custom-order',  label: 'Custom Order'  },
+  { href: '/gift',          label: 'Gift'          },
+  { href: '/gallery',       label: 'Gallery'       },
+  { href: '/our-story',     label: 'Our Story'     },
+  { href: '/#contact',      label: 'Contact'       },
 ]
 
 function WhatsAppIcon() {
@@ -42,7 +46,13 @@ export function Navbar() {
   }, [open])
 
   return (
-    <header className="fixed top-3 left-3 right-3 z-50 sm:top-4 sm:left-4 sm:right-4">
+    <header className="fixed top-0 inset-x-0 z-50 flex flex-col">
+
+      {/* ── Announcement bar ── */}
+      <AnnouncementBar />
+
+      {/* ── Nav wrapper ── */}
+      <div className="px-3 sm:px-4 pt-2">
 
       {/* ── Main bar ── */}
       <nav
@@ -73,12 +83,12 @@ export function Navbar() {
           </Link>
 
           {/* Desktop nav links */}
-          <div className="hidden md:flex items-center gap-7">
+          <div className="hidden md:flex items-center gap-4 lg:gap-6">
             {NAV_LINKS.map(({ href, label }) => (
               <Link
                 key={href}
                 href={href}
-                className="relative text-[13.5px] font-medium text-brown hover:text-gold transition-colors duration-200 group py-1"
+                className="relative text-[12.5px] lg:text-[13px] font-medium text-brown hover:text-gold transition-colors duration-200 group py-1 whitespace-nowrap"
               >
                 {label}
                 {/* Animated underline */}
@@ -210,6 +220,7 @@ export function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
+      </div>{/* end nav wrapper */}
     </header>
   )
 }

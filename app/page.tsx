@@ -9,6 +9,8 @@ import { TestimonialsSection } from '@/components/home/TestimonialsSection'
 import { EmailCapture }        from '@/components/home/EmailCapture'
 import { MarqueeStrip }        from '@/components/ui/MarqueeStrip'
 import { SignatureSection }    from '@/components/home/SignatureSection'
+import { BundleSection }       from '@/components/home/BundleSection'
+import { DeliveryZone }        from '@/components/home/DeliveryZone'
 
 export default function Home() {
   return (
@@ -19,8 +21,10 @@ export default function Home() {
         <MarqueeStrip />
         <TrustBar />
         <FeaturedProducts />
+        <BundleSection />
         <SignatureSection />
         <DeliveryStrip />
+        <DeliveryZone />
         <TestimonialsSection />
         <AboutSection />
         <EmailCapture />

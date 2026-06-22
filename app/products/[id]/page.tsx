@@ -1,4 +1,5 @@
 import { notFound }    from 'next/navigation'
+import type { Metadata } from 'next'
 import { Navbar }       from '@/components/layout/Navbar'
 import { Footer }       from '@/components/layout/Footer'
 import { ProductClient } from './ProductClient'
@@ -6,6 +7,38 @@ import { getProduct, products } from '@/lib/products'
 
 export function generateStaticParams() {
   return products.map((p) => ({ id: p.id }))
+}
+
+export async function generateMetadata(
+  props: PageProps<'/products/[id]'>
+): Promise<Metadata> {
+  const { id } = await props.params
+  const product = getProduct(id)
+  if (!product) return {}
+
+  return {
+    title: `${product.name} — Yasmina's Bites`,
+    description: product.description,
+    openGraph: {
+      title: `${product.name} — Yasmina's Bites`,
+      description: product.description,
+      images: [
+        {
+          url: product.image,
+          width: 800,
+          height: 800,
+          alt: product.name,
+        },
+      ],
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${product.name} — Yasmina's Bites`,
+      description: product.description,
+      images: [product.image],
+    },
+  }
 }
 
 export default async function ProductPage(props: PageProps<'/products/[id]'>) {

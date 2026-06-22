@@ -5,6 +5,7 @@ import { AuthProvider } from '@/contexts/AuthContext'
 import { Toaster } from 'react-hot-toast'
 import { CartDrawer } from '@/components/layout/CartDrawer'
 import { WhatsAppButton } from '@/components/ui/WhatsAppButton'
+import { SocialProofToast } from '@/components/ui/SocialProofToast'
 
 export function Providers({ children }: { children: ReactNode }) {
   return (
@@ -12,6 +13,7 @@ export function Providers({ children }: { children: ReactNode }) {
       {children}
       <CartDrawer />
       <WhatsAppButton />
+      <SocialProofToast />
       <Toaster
         position="top-center"
         toastOptions={{
