@@ -1,26 +1,44 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  /* ── Brand palette — extracted from Yasmina's Bites logo ─────────────────
+     Logo background: bright warm ivory   ~#FAF6EE
+     "YASMINA'S BITES" text:  olive-gold  ~#8B7020
+     Illustration line-art:   warm gold   ~#A88828
+     Drip accent:             warm taupe  ~#C8B49A
+  ────────────────────────────────────────────────────────────────────────── */
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  /* Base — very light warm ivory (matches the logo background exactly) */
+  --color-cream:        #FAF6EE;
+  /* Slightly deeper cream for card / hover surfaces */
+  --color-cream-dark:   #F0E8D8;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Primary olive-gold — the "YASMINA'S BITES" lettering colour */
+  --color-gold:         #8B7020;
+  /* Lighter warm gold — illustration line-art tone */
+  --color-gold-light:   #A88828;
+  /* Pale gold — subtle tints, card backgrounds */
+  --color-gold-pale:    #F0E4C0;
+
+  /* Deep warm chocolate — primary dark text */
+  --color-brown:        #3C1E08;
+  /* Mid warm brown — secondary / muted text */
+  --color-brown-light:  #6B3F14;
+
+  /* Warm taupe-sand — drip accent from the logo */
+  --color-taupe:        #C8B49A;
+
+  /* Near-black with warm undertone */
+  --color-choco:        #170900;
+
+  /* Brand fonts */
+  --font-playfair: var(--font-playfair);
+  --font-dancing:  var(--font-dancing);
+  --font-inter:    var(--font-inter);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #FAF6EE;
+  color: #3C1E08;
+  font-family: var(--font-inter), system-ui, sans-serif;
 }

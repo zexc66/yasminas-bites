@@ -1,0 +1,89 @@
+<svg viewBox="0 0 700 700" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bgRadial" cx="40%" cy="35%" r="70%">
+      <stop offset="0%"  stop-color="#2A1406"/>
+      <stop offset="100%" stop-color="#0D0502"/>
+    </radialGradient>
+    <linearGradient id="goldSheen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"  stop-color="#E8C96A"/>
+      <stop offset="50%" stop-color="#C9A020"/>
+      <stop offset="100%" stop-color="#8B6510"/>
+    </linearGradient>
+    <linearGradient id="goldText" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"  stop-color="#E0BC55"/>
+      <stop offset="100%" stop-color="#A07818"/>
+    </linearGradient>
+    <linearGradient id="cookieGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"  stop-color="#D4A044"/>
+      <stop offset="100%" stop-color="#8B5E10"/>
+    </linearGradient>
+    <linearGradient id="dripDown" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"  stop-color="#E8C96A"/>
+      <stop offset="100%" stop-color="#C9A020" stop-opacity="0.3"/>
+    </linearGradient>
+    <radialGradient id="chipGrad" cx="35%" cy="35%" r="65%">
+      <stop offset="0%"  stop-color="#5C3210"/>
+      <stop offset="100%" stop-color="#2A1406"/>
+    </radialGradient>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="cardShadow">
+      <feDropShadow dx="0" dy="8" stdDeviation="24" flood-color="#000" flood-opacity="0.5"/>
+    </filter>
+    <filter id="cookieGlow">
+      <feDropShadow dx="0" dy="0" stdDeviation="10" flood-color="#C9A020" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <circle cx="350" cy="350" r="328" fill="url(#bgRadial)" filter="url(#cardShadow)"/>
+  <circle cx="350" cy="350" r="320" fill="none" stroke="url(#goldSheen)" stroke-width="1.2" opacity="0.5"/>
+  <circle cx="350" cy="350" r="314" fill="none" stroke="url(#goldSheen)" stroke-width="0.4" opacity="0.2"/>
+
+  <ellipse cx="350" cy="228" rx="82" ry="80" fill="url(#cookieGrad)" filter="url(#cookieGlow)"/>
+  <ellipse cx="350" cy="226" rx="75" ry="73" fill="#CC9030" opacity="0.4"/>
+  <ellipse cx="348" cy="224" rx="66" ry="64" fill="#E8AB48" opacity="0.15"/>
+
+  <path d="M290,208 Q298,212 292,220" stroke="#7A4808" stroke-width="1.2" fill="none" opacity="0.6"/>
+  <path d="M404,218 Q398,224 406,230" stroke="#7A4808" stroke-width="1.2" fill="none" opacity="0.6"/>
+  <path d="M352,155 Q355,162 349,168" stroke="#7A4808" stroke-width="1.2" fill="none" opacity="0.5"/>
+
+  <ellipse cx="330" cy="208" rx="9" ry="8.5" fill="url(#chipGrad)" transform="rotate(-8,330,208)"/>
+  <ellipse cx="368" cy="204" rx="8.5" ry="8" fill="url(#chipGrad)" transform="rotate(5,368,204)"/>
+  <ellipse cx="342" cy="242" rx="9" ry="8.5" fill="url(#chipGrad)" transform="rotate(-5,342,242)"/>
+  <ellipse cx="378" cy="238" rx="8" ry="7.5" fill="url(#chipGrad)" transform="rotate(10,378,238)"/>
+  <ellipse cx="316" cy="234" rx="8" ry="7.5" fill="url(#chipGrad)" transform="rotate(-12,316,234)"/>
+  <ellipse cx="354" cy="220" rx="7.5" ry="7" fill="url(#chipGrad)" transform="rotate(4,354,220)"/>
+  <ellipse cx="390" cy="216" rx="6" ry="5.5" fill="url(#chipGrad)" transform="rotate(8,390,216)"/>
+  <ellipse cx="308" cy="218" rx="5.5" ry="5" fill="url(#chipGrad)" transform="rotate(-6,308,218)"/>
+  <ellipse cx="362" cy="252" rx="5.5" ry="5" fill="url(#chipGrad)" transform="rotate(12,362,252)"/>
+  <ellipse cx="326" cy="254" rx="5" ry="4.5" fill="url(#chipGrad)" transform="rotate(-8,326,254)"/>
+
+  <ellipse cx="327" cy="205" rx="3" ry="2" fill="#8B5020" opacity="0.6"/>
+  <ellipse cx="365" cy="201" rx="3" ry="2" fill="#8B5020" opacity="0.6"/>
+  <ellipse cx="339" cy="239" rx="3" ry="2" fill="#8B5020" opacity="0.6"/>
+
+  <path d="M350,306 C350,306 347,316 346,328 C345,338 348,346 350,346 C352,346 355,338 354,328 C353,316 350,306 350,306 Z" fill="url(#dripDown)" opacity="0.9"/>
+  <path d="M328,302 C328,302 325,311 325,320 C325,328 327,334 329,334 C331,334 333,328 333,320 C333,311 328,302 328,302 Z" fill="url(#dripDown)" opacity="0.6"/>
+  <path d="M372,302 C372,302 369,311 369,320 C369,328 371,334 373,334 C375,334 377,328 377,320 C377,311 372,302 372,302 Z" fill="url(#dripDown)" opacity="0.6"/>
+
+  <text x="350" y="404" font-family="'Georgia', 'Times New Roman', serif" font-size="46" font-weight="700" letter-spacing="12" text-anchor="middle" fill="#F0E4C0">YASMINA'S</text>
+  <line x1="148" y1="420" x2="552" y2="420" stroke="url(#goldSheen)" stroke-width="1" opacity="0.5"/>
+  <text x="350" y="498" font-family="'Georgia', 'Times New Roman', serif" font-size="98" font-weight="700" letter-spacing="18" text-anchor="middle" fill="url(#goldText)">BITES</text>
+
+  <line x1="148" y1="516" x2="298" y2="516" stroke="url(#goldSheen)" stroke-width="0.8" opacity="0.55"/>
+  <line x1="402" y1="516" x2="552" y2="516" stroke="url(#goldSheen)" stroke-width="0.8" opacity="0.55"/>
+  <polygon points="350,508 360,516 350,524 340,516" fill="url(#goldSheen)"/>
+  <circle cx="305" cy="516" r="2.2" fill="#C9A020" opacity="0.55"/>
+  <circle cx="395" cy="516" r="2.2" fill="#C9A020" opacity="0.55"/>
+
+  <text x="350" y="554" font-family="'Georgia', serif" font-size="20" font-style="italic" letter-spacing="2" text-anchor="middle" fill="#C9A020" opacity="0.8">Freshly baked, made with love</text>
+  <rect x="148" y="578" width="404" height="0.7" fill="url(#goldSheen)" opacity="0.3"/>
+  <text x="350" y="598" font-family="'Georgia', serif" font-size="10" letter-spacing="7" text-anchor="middle" fill="#C9A020" opacity="0.5">HANDMADE · AMMAN, JORDAN</text>
+
+  <ellipse cx="178" cy="200" rx="12" ry="11" fill="#C9A020" opacity="0.04"/>
+  <ellipse cx="522" cy="210" rx="10" ry="9" fill="#C9A020" opacity="0.04"/>
+  <ellipse cx="165" cy="440" rx="9" ry="8" fill="#C9A020" opacity="0.04"/>
+  <ellipse cx="535" cy="430" rx="11" ry="10" fill="#C9A020" opacity="0.04"/>
+</svg>
