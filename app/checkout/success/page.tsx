@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { CheckCircle, Package, Instagram } from 'lucide-react'
+import { CheckCircle, Package } from 'lucide-react'
 
 export const metadata = {
   title: "Order Confirmed — Yasmina's Bites",
@@ -73,7 +73,11 @@ export default function SuccessPage() {
 
       {/* Instagram share nudge */}
       <div className="mt-10 flex items-center gap-2 text-taupe text-xs">
-        <Instagram size={14} />
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5" aria-hidden>
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+        </svg>
         <span>Tag us @yasminasbites to be featured</span>
       </div>
     </div>
