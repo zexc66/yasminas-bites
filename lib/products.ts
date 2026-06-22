@@ -45,6 +45,17 @@ export const products: Product[] = [
     rating: 4.7,
     reviewCount: 156,
   },
+  {
+    id: 'pop-cake',
+    name: 'Valentine Pop Cakes',
+    description:
+      'Handcrafted Oreo pop cakes dipped in velvety white chocolate, drizzled with red and finished with festive red sprinkles — presented in a gift box with shredded paper. Perfect for gifting.',
+    price: 16,
+    image: '/images/cookie-pop-cake.png',
+    featured: true,
+    rating: 4.9,
+    reviewCount: 94,
+  },
 ]
 
 export function getProduct(id: string): Product | undefined {

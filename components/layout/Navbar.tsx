@@ -52,7 +52,7 @@ export function Navbar() {
             : 'bg-cream/78 backdrop-blur-lg border border-gold-pale/35'
         }`}
       >
-        <div className="px-4 sm:px-5 flex items-center justify-between h-[58px] sm:h-[62px]">
+        <div className="px-4 sm:px-5 flex items-center justify-between h-[76px] sm:h-[86px]">
 
           {/* Logo */}
           <Link
@@ -60,13 +60,13 @@ export function Navbar() {
             aria-label="Yasmina's Bites home"
             className="shrink-0 rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold"
           >
-            <div className="relative w-[50px] h-[50px]">
+            <div className="relative w-[80px] h-[80px]">
               <Image
                 src="/images/logo.svg"
                 alt="Yasmina's Bites"
                 fill
                 className="object-contain"
-                sizes="50px"
+                sizes="80px"
                 priority
               />
             </div>
