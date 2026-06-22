@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Playfair_Display, Dancing_Script, Inter } from 'next/font/google'
+import { Playfair_Display, Dancing_Script, Inter, Noto_Sans_Arabic } from 'next/font/google'
 import { Providers } from '@/components/Providers'
 import './globals.css'
 
@@ -18,6 +18,11 @@ const inter = Inter({
   subsets: ['latin'],
 })
 
+const notoArabic = Noto_Sans_Arabic({
+  variable: '--font-arabic',
+  subsets: ['arabic'],
+})
+
 export const metadata: Metadata = {
   title: "Yasmina's Bites — Little Bites of Happiness",
   description:
@@ -33,7 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${dancing.variable} ${inter.variable}`}
+      className={`${playfair.variable} ${dancing.variable} ${inter.variable} ${notoArabic.variable}`}
     >
       <body className="bg-cream text-brown antialiased">
         <Providers>{children}</Providers>

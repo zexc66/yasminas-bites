@@ -6,6 +6,7 @@ import { AboutSection }        from '@/components/home/AboutSection'
 import { TrustBar }            from '@/components/layout/TrustBar'
 import { DeliveryStrip }       from '@/components/home/DeliveryStrip'
 import { TestimonialsSection } from '@/components/home/TestimonialsSection'
+import { ReviewsSection }      from '@/components/home/ReviewsSection'
 import { EmailCapture }        from '@/components/home/EmailCapture'
 import { MarqueeStrip }        from '@/components/ui/MarqueeStrip'
 import { SignatureSection }    from '@/components/home/SignatureSection'
@@ -26,6 +27,7 @@ export default function Home() {
         <DeliveryStrip />
         <DeliveryZone />
         <TestimonialsSection />
+        <ReviewsSection />
         <AboutSection />
         <EmailCapture />
       </main>

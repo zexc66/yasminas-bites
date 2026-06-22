@@ -7,16 +7,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ShoppingBag, Menu, X, User } from 'lucide-react'
 import { useCart } from '@/lib/cartStore'
 import { useAuth } from '@/contexts/AuthContext'
+import { useLang } from '@/contexts/LanguageContext'
 import { AnnouncementBar } from '@/components/ui/AnnouncementBar'
-
-const NAV_LINKS = [
-  { href: '/shop',          label: 'Shop'          },
-  { href: '/custom-order',  label: 'Custom Order'  },
-  { href: '/gift',          label: 'Gift'          },
-  { href: '/gallery',       label: 'Gallery'       },
-  { href: '/our-story',     label: 'Our Story'     },
-  { href: '/#contact',      label: 'Contact'       },
-]
 
 function WhatsAppIcon() {
   return (
@@ -32,7 +24,17 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const { items, openCart }     = useCart()
   const { user }                = useAuth()
+  const { lang, setLang, t }    = useLang()
   const count                   = items.reduce((s, i) => s + i.quantity, 0)
+
+  const NAV_LINKS = [
+    { href: '/shop',         label: t('nav_shop')    },
+    { href: '/custom-order', label: t('nav_custom')  },
+    { href: '/gift',         label: t('nav_gift')    },
+    { href: '/gallery',      label: t('nav_gallery') },
+    { href: '/our-story',    label: t('nav_story')   },
+    { href: '/#contact',     label: t('nav_contact') },
+  ]
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 48)
@@ -114,6 +116,16 @@ export function Navbar() {
               <WhatsAppIcon />
               Order
             </a>
+
+            {/* Language toggle — desktop only */}
+            <button
+              onClick={() => setLang(lang === 'en' ? 'ar' : 'en')}
+              className="hidden md:flex items-center gap-0 text-[11px] font-bold rounded-full border border-gold-pale/60 overflow-hidden mr-1"
+              aria-label="Toggle language"
+            >
+              <span className={`px-2.5 py-1.5 transition-colors ${lang === 'en' ? 'bg-gold text-cream' : 'text-brown hover:bg-gold-pale/50'}`}>EN</span>
+              <span className={`px-2.5 py-1.5 transition-colors ${lang === 'ar' ? 'bg-gold text-cream' : 'text-brown hover:bg-gold-pale/50'}`}>AR</span>
+            </button>
 
             {/* Account */}
             <Link
@@ -202,6 +214,18 @@ export function Navbar() {
                 <User size={16} className="mr-2.5 text-taupe" />
                 {user ? 'My Account' : 'Sign In'}
               </Link>
+
+              {/* Language toggle — mobile */}
+              <div className="mt-1.5 pt-3 border-t border-gold-pale/50 flex">
+                <button
+                  onClick={() => setLang(lang === 'en' ? 'ar' : 'en')}
+                  className="flex items-center gap-0 text-[11px] font-bold rounded-full border border-gold-pale/60 overflow-hidden"
+                  aria-label="Toggle language"
+                >
+                  <span className={`px-2.5 py-1.5 transition-colors ${lang === 'en' ? 'bg-gold text-cream' : 'text-brown hover:bg-gold-pale/50'}`}>EN</span>
+                  <span className={`px-2.5 py-1.5 transition-colors ${lang === 'ar' ? 'bg-gold text-cream' : 'text-brown hover:bg-gold-pale/50'}`}>AR</span>
+                </button>
+              </div>
 
               {/* WhatsApp CTA */}
               <div className="mt-1.5 pt-3 border-t border-gold-pale/50">

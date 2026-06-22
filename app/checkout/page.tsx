@@ -15,6 +15,8 @@ import {
 import Image from 'next/image'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
+import { db } from '@/lib/firebase'
 
 type Method = 'cod' | 'cliq' | 'card' | 'paypal'
 
@@ -85,13 +87,32 @@ export default function CheckoutPage() {
       .then((d) => setCS(d.clientSecret))
   }, [method, total])
 
-  const handleCodSubmit = (e: React.FormEvent) => {
+  const handleCodSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!codForm.name || !codForm.phone || !codForm.address) {
       toast.error('Please fill in all required fields')
       return
     }
-    setSavedTotal(total)
+    const orderTotal = total
+    if (db) {
+      try {
+        await addDoc(collection(db, 'orders'), {
+          customerName: codForm.name,
+          phone: codForm.phone,
+          address: codForm.address,
+          area: '',
+          notes: codForm.notes ?? '',
+          items: items.map((i) => ({ id: i.product.id, name: i.product.name, quantity: i.quantity, price: i.product.price })),
+          total: orderTotal,
+          status: 'pending',
+          method: 'cod',
+          createdAt: serverTimestamp(),
+        })
+      } catch (e) {
+        console.error('Failed to save order', e)
+      }
+    }
+    setSavedTotal(orderTotal)
     setCodDone(true)
     clearCart()
   }

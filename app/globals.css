@@ -42,3 +42,13 @@ body {
   color: #3C1E08;
   font-family: var(--font-inter), system-ui, sans-serif;
 }
+
+:root[dir="rtl"] {
+  font-family: var(--font-arabic), var(--font-inter), sans-serif;
+}
+:root[dir="rtl"] .font-playfair {
+  font-family: var(--font-arabic), serif;
+}
+:root[dir="rtl"] .font-dancing {
+  font-family: var(--font-arabic), cursive;
+}
