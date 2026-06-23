@@ -294,7 +294,7 @@ function ReviewsTab() {
           <div>
             <p className="font-inter font-bold text-brown">{review.reviewerName}</p>
             <div className="flex items-center gap-2 mt-0.5">
-              <span className="text-gold text-sm">{'★'.repeat(review.rating ?? 0)}{'☆'.repeat(5 - (review.rating ?? 0))}</span>
+              <span className="text-gold text-sm">{(()=>{ const r = Math.max(0, Math.min(5, Math.round(Number(review.rating) || 0))); return '★'.repeat(r) + '☆'.repeat(5 - r); })()}</span>
               {review.product && (
                 <span className="text-xs bg-gold-pale text-brown-light px-2 py-0.5 rounded-full">{review.product}</span>
               )}

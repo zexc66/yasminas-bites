@@ -12,7 +12,7 @@ const WHATSAPP = 'https://wa.me/962789006574'
 /* ── Animation helpers ── */
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
-  show:   { opacity: 1, y: 0,  transition: { duration: 0.6, ease: 'easeOut' } },
+  show:   { opacity: 1, y: 0,  transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const } },
 }
 
 const staggerContainer = (stagger = 0.12) => ({
