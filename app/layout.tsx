@@ -47,6 +47,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html
       lang="en"
       className={`${playfair.variable} ${dancing.variable} ${inter.variable} ${notoArabic.variable}`}
+      suppressHydrationWarning
     >
       <body className="bg-cream text-brown antialiased">
         <Providers>{children}</Providers>
