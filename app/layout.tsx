@@ -6,21 +6,29 @@ import './globals.css'
 const playfair = Playfair_Display({
   variable: '--font-playfair',
   subsets: ['latin'],
+  display: 'swap',
+  preload: true,
 })
 
 const dancing = Dancing_Script({
   variable: '--font-dancing',
   subsets: ['latin'],
+  display: 'swap',
+  preload: false,
 })
 
 const inter = Inter({
   variable: '--font-inter',
   subsets: ['latin'],
+  display: 'swap',
+  preload: true,
 })
 
 const notoArabic = Noto_Sans_Arabic({
   variable: '--font-arabic',
   subsets: ['arabic'],
+  display: 'swap',
+  preload: false,
 })
 
 export const metadata: Metadata = {

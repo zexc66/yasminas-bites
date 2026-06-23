@@ -183,9 +183,9 @@ export function HeroSection() {
           <div className="relative flex items-center justify-center lg:justify-end">
             <motion.div
               style={{ y: imgY }}
-              initial={{ opacity: 0, scale: 0.9, y: 30 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 0.95, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+              initial={{ scale: 0.97 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 0.95, ease: [0.22, 1, 0.36, 1] }}
               className="relative"
             >
               {/* Main image — tall rounded rectangle */}

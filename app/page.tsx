@@ -1,17 +1,20 @@
-import { Navbar }              from '@/components/layout/Navbar'
-import { Footer }              from '@/components/layout/Footer'
-import { HeroSection }         from '@/components/home/HeroSection'
-import { FeaturedProducts }    from '@/components/home/FeaturedProducts'
-import { AboutSection }        from '@/components/home/AboutSection'
-import { TrustBar }            from '@/components/layout/TrustBar'
-import { DeliveryStrip }       from '@/components/home/DeliveryStrip'
-import { TestimonialsSection } from '@/components/home/TestimonialsSection'
-import { ReviewsSection }      from '@/components/home/ReviewsSection'
-import { EmailCapture }        from '@/components/home/EmailCapture'
-import { MarqueeStrip }        from '@/components/ui/MarqueeStrip'
-import { SignatureSection }    from '@/components/home/SignatureSection'
-import { BundleSection }       from '@/components/home/BundleSection'
-import { DeliveryZone }        from '@/components/home/DeliveryZone'
+import dynamic from 'next/dynamic'
+import { Navbar }           from '@/components/layout/Navbar'
+import { Footer }           from '@/components/layout/Footer'
+import { HeroSection }      from '@/components/home/HeroSection'
+import { FeaturedProducts } from '@/components/home/FeaturedProducts'
+import { AboutSection }     from '@/components/home/AboutSection'
+import { TrustBar }         from '@/components/layout/TrustBar'
+import { MarqueeStrip }     from '@/components/ui/MarqueeStrip'
+import { DeliveryZone }     from '@/components/home/DeliveryZone'
+
+// Below-fold 'use client' components — lazy-loaded to reduce initial JS
+const BundleSection       = dynamic(() => import('@/components/home/BundleSection').then(m => ({ default: m.BundleSection })))
+const SignatureSection    = dynamic(() => import('@/components/home/SignatureSection').then(m => ({ default: m.SignatureSection })))
+const DeliveryStrip       = dynamic(() => import('@/components/home/DeliveryStrip').then(m => ({ default: m.DeliveryStrip })))
+const TestimonialsSection = dynamic(() => import('@/components/home/TestimonialsSection').then(m => ({ default: m.TestimonialsSection })))
+const ReviewsSection      = dynamic(() => import('@/components/home/ReviewsSection').then(m => ({ default: m.ReviewsSection })))
+const EmailCapture        = dynamic(() => import('@/components/home/EmailCapture').then(m => ({ default: m.EmailCapture })))
 
 export default function Home() {
   return (
