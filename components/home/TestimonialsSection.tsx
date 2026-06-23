@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { Star } from 'lucide-react'
+import { useLang } from '@/contexts/LanguageContext'
 
 interface Testimonial {
   name: string
@@ -57,16 +58,18 @@ const cardVariants = {
 }
 
 export function TestimonialsSection() {
+  const { t } = useLang()
+
   return (
     <section className="bg-cream-dark py-20 px-6">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
           <p className="text-xs tracking-widest uppercase text-gold mb-3">
-            What people are saying
+            {t('testimonials_label')}
           </p>
           <h2 className="font-playfair text-3xl sm:text-4xl text-brown">
-            Little bites of happiness
+            {t('testimonials_heading')}
           </h2>
         </div>
 

@@ -6,6 +6,7 @@ import { motion } from 'framer-motion'
 import { ChefHat, Star, Heart, MapPin } from 'lucide-react'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
+import { useLang } from '@/contexts/LanguageContext'
 
 const WHATSAPP = 'https://wa.me/962789006574'
 
@@ -20,49 +21,22 @@ const staggerContainer = (stagger = 0.12) => ({
   show:   { transition: { staggerChildren: stagger } },
 })
 
-/* ── Data ── */
-const VALUES = [
-  {
-    icon:  ChefHat,
-    label: 'Fresh',
-    desc:  'Every order baked the same day — never stored, never stale.',
-  },
-  {
-    icon:  Star,
-    label: 'Premium',
-    desc:  'Only the finest local and imported ingredients make the cut.',
-  },
-  {
-    icon:  Heart,
-    label: 'Handcrafted',
-    desc:  'Made by hand with patience, precision, and genuine care.',
-  },
-  {
-    icon:  MapPin,
-    label: 'Local',
-    desc:  'Proudly baked in Amman, delivered across the city with love.',
-  },
-]
-
-const TIMELINE = [
-  {
-    year:  '2022',
-    event: 'First batch in the kitchen',
-    desc:  'It started with a single recipe, a home oven, and a dream to share joy through baking.',
-  },
-  {
-    year:  '2023',
-    event: 'First 100 orders',
-    desc:  'Word spread fast. Friends became customers, customers became family.',
-  },
-  {
-    year:  '2024',
-    event: 'Delivering across Amman',
-    desc:  'Now reaching every corner of the city — from Abdoun to Zarqa — fresh every day.',
-  },
-]
-
 export default function OurStoryPage() {
+  const { t } = useLang()
+
+  const VALUES = [
+    { icon: ChefHat, label: t('story_val_fresh'),       desc: t('story_val_fresh_desc') },
+    { icon: Star,    label: t('story_val_premium'),      desc: t('story_val_premium_desc') },
+    { icon: Heart,   label: t('story_val_handcrafted'),  desc: t('story_val_handcrafted_desc') },
+    { icon: MapPin,  label: t('story_val_local'),        desc: t('story_val_local_desc') },
+  ]
+
+  const TIMELINE = [
+    { year: '2022', event: t('story_t1_event'), desc: t('story_t1_desc') },
+    { year: '2023', event: t('story_t2_event'), desc: t('story_t2_desc') },
+    { year: '2024', event: t('story_t3_event'), desc: t('story_t3_desc') },
+  ]
+
   return (
     <>
       <Navbar />
@@ -105,13 +79,13 @@ export default function OurStoryPage() {
                 Yasmina&apos;s Bites
               </p>
               <h1 className="font-playfair text-5xl sm:text-7xl font-bold text-cream leading-tight">
-                Our Story
+                {t('nav_story')}
               </h1>
               <p className="mt-5 font-dancing text-2xl sm:text-3xl text-taupe">
-                Born from a love of baking
+                {t('story_hero_tagline')}
               </p>
               <p className="mt-6 text-taupe/80 leading-relaxed max-w-xl mx-auto text-sm sm:text-base">
-                A kitchen, a passion, and a belief that great food creates genuine happiness.
+                {t('story_hero_sub')}
               </p>
             </motion.div>
           </div>
@@ -139,7 +113,7 @@ export default function OurStoryPage() {
                 {/* Floating badge */}
                 <div className="absolute bottom-5 right-5 bg-choco/90 backdrop-blur-sm border border-gold/30 rounded-2xl px-4 py-3 text-center">
                   <p className="font-playfair font-bold text-gold text-xl">500+</p>
-                  <p className="text-cream text-[10px] font-medium">Happy Customers</p>
+                  <p className="text-cream text-[10px] font-medium">{t('story_happy_customers')}</p>
                 </div>
               </div>
             </motion.div>
@@ -154,29 +128,23 @@ export default function OurStoryPage() {
             >
               <motion.div variants={fadeUp}>
                 <p className="text-gold text-xs font-semibold tracking-[0.25em] uppercase mb-3">
-                  The Founder
+                  {t('story_founder_label')}
                 </p>
                 <h2 className="font-playfair text-4xl sm:text-5xl font-bold text-brown leading-snug">
-                  Born from a love<br />of baking
+                  {t('story_founder_heading1')}<br />{t('story_founder_heading2')}
                 </h2>
               </motion.div>
 
               <motion.p variants={fadeUp} className="text-brown-light leading-relaxed">
-                It began the way most great things do — quietly, in a home kitchen in Amman.
-                Yasmina would spend evenings experimenting with flavours, textures, and techniques,
-                driven by a single conviction: cookies should feel like a warm hug.
+                {t('story_founder_body1')}
               </motion.p>
 
               <motion.p variants={fadeUp} className="text-brown-light leading-relaxed">
-                What set her apart was an uncompromising commitment to quality. Every ingredient
-                is chosen with intention — premium chocolate, fresh pistachios, imported Biscoff —
-                because she believes the people she bakes for deserve nothing less than the finest.
+                {t('story_founder_body2')}
               </motion.p>
 
               <motion.p variants={fadeUp} className="text-brown-light leading-relaxed">
-                Today, Yasmina&apos;s Bites delivers across Amman, but the spirit remains exactly
-                the same as that first batch: made by hand, baked with heart, and infused with
-                the kind of love that you can taste in every bite.
+                {t('story_founder_body3')}
               </motion.p>
             </motion.div>
           </div>
@@ -194,10 +162,10 @@ export default function OurStoryPage() {
               className="text-center mb-14"
             >
               <p className="text-gold text-xs font-semibold tracking-[0.25em] uppercase mb-3">
-                What we stand for
+                {t('story_values_label')}
               </p>
               <h2 className="font-playfair text-4xl sm:text-5xl font-bold text-brown">
-                Our Values
+                {t('story_values_heading')}
               </h2>
             </motion.div>
 
@@ -237,10 +205,10 @@ export default function OurStoryPage() {
               className="text-center mb-16"
             >
               <p className="text-gold text-xs font-semibold tracking-[0.25em] uppercase mb-3">
-                The journey
+                {t('story_timeline_label')}
               </p>
               <h2 className="font-playfair text-4xl sm:text-5xl font-bold text-brown">
-                Milestones
+                {t('story_milestones')}
               </h2>
             </motion.div>
 
@@ -305,13 +273,13 @@ export default function OurStoryPage() {
             className="relative z-10 max-w-2xl mx-auto px-6 text-center"
           >
             <motion.p variants={fadeUp} className="text-gold text-xs font-semibold tracking-[0.25em] uppercase mb-4">
-              Place your order today
+              {t('story_cta_label')}
             </motion.p>
             <motion.h2 variants={fadeUp} className="font-playfair text-4xl sm:text-5xl font-bold text-cream leading-tight mb-4">
-              Ready to taste the love?
+              {t('story_cta_heading')}
             </motion.h2>
             <motion.p variants={fadeUp} className="font-dancing text-2xl text-taupe mb-10">
-              Fresh from our kitchen to your door
+              {t('story_cta_tagline')}
             </motion.p>
 
             <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -319,7 +287,7 @@ export default function OurStoryPage() {
                 href="/shop"
                 className="inline-flex items-center justify-center gap-2 bg-gold hover:bg-gold-light text-cream font-semibold px-8 py-4 rounded-full text-sm transition-colors duration-200 cursor-pointer shadow-lg shadow-gold/25"
               >
-                Shop Now
+                {t('hero_cta_shop')}
               </Link>
               <a
                 href={WHATSAPP}
@@ -328,7 +296,7 @@ export default function OurStoryPage() {
                 className="inline-flex items-center justify-center gap-2 border border-[#25D366]/40 bg-[#25D366]/10 hover:bg-[#25D366]/20 text-[#4ade80] font-semibold px-8 py-4 rounded-full text-sm transition-colors duration-200 cursor-pointer"
               >
                 <WhatsAppIcon />
-                Order via WhatsApp
+                {t('order_wa')}
               </a>
             </motion.div>
           </motion.div>

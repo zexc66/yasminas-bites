@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { Check } from 'lucide-react'
+import { useLang } from '@/contexts/LanguageContext'
 
 interface Bundle {
   name:     string
@@ -11,33 +12,6 @@ interface Bundle {
   now:      number
   save:     number
 }
-
-const BUNDLES: Bundle[] = [
-  {
-    name:  'The Classic Duo',
-    badge: 'Most Popular',
-    items: ['Biscoff Caramel', 'Cookie Bites Box'],
-    was:   40,
-    now:   34,
-    save:  6,
-  },
-  {
-    name:  'The Gift Set',
-    badge: 'Perfect Gift',
-    items: ['Pistachio Drizzle', 'Pop Cakes Box (6)'],
-    was:   40,
-    now:   33,
-    save:  7,
-  },
-  {
-    name:  'The Full Experience',
-    badge: 'Best Value',
-    items: ['Biscoff Caramel', 'Pistachio Drizzle', 'Pop Cakes Box', 'Cookie Bites Box'],
-    was:   80,
-    now:   64,
-    save:  16,
-  },
-]
 
 const containerVariants = {
   hidden: {},
@@ -52,6 +26,14 @@ const cardVariants = {
 }
 
 export function BundleSection() {
+  const { t } = useLang()
+
+  const BUNDLES: Bundle[] = [
+    { name: 'The Classic Duo',      badge: t('bundle_badge_popular'), items: ['Biscoff Caramel', 'Cookie Bites Box'],                                   was: 40, now: 34, save: 6  },
+    { name: 'The Gift Set',         badge: t('bundle_badge_gift'),    items: ['Pistachio Drizzle', 'Pop Cakes Box (6)'],                                 was: 40, now: 33, save: 7  },
+    { name: 'The Full Experience',  badge: t('bundle_badge_value'),   items: ['Biscoff Caramel', 'Pistachio Drizzle', 'Pop Cakes Box', 'Cookie Bites Box'], was: 80, now: 64, save: 16 },
+  ]
+
   return (
     <section className="bg-cream-dark py-20 px-6">
       <div className="max-w-6xl mx-auto">
@@ -59,10 +41,10 @@ export function BundleSection() {
         {/* Header */}
         <div className="text-center mb-12">
           <h2 className="font-playfair text-4xl sm:text-5xl text-brown font-bold mb-3">
-            Bundle &amp; Save
+            {t('bundle_heading')}
           </h2>
           <p className="text-brown-light text-base">
-            Handpicked combinations for every occasion
+            {t('bundle_sub')}
           </p>
         </div>
 
@@ -113,7 +95,7 @@ export function BundleSection() {
 
                 {/* Save pill */}
                 <span className="inline-block bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full mb-5">
-                  Save JD {bundle.save}
+                  {t('bundle_save')} {bundle.save}
                 </span>
 
                 {/* WhatsApp CTA */}
@@ -123,7 +105,7 @@ export function BundleSection() {
                   rel="noopener noreferrer"
                   className="block w-full text-center bg-brown text-cream text-sm font-semibold py-3 rounded-2xl hover:bg-brown-light transition-colors duration-200"
                 >
-                  Order via WhatsApp
+                  {t('order_wa')}
                 </a>
               </div>
             </motion.div>

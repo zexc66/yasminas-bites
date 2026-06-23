@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
+import { useLang } from '@/contexts/LanguageContext'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
@@ -11,6 +12,14 @@ const fadeUp = {
 }
 
 export function SignatureSection() {
+  const { t } = useLang()
+
+  const stats = [
+    { number: '500+', label: t('sig_stat_customers') },
+    { number: '4',    label: t('sig_stat_flavours') },
+    { number: '100%', label: t('sig_stat_fresh') },
+  ]
+
   return (
     <section className="relative bg-choco overflow-hidden py-24 px-6">
 
@@ -56,28 +65,22 @@ export function SignatureSection() {
           className="flex flex-col gap-6"
         >
           <motion.p variants={fadeUp} className="text-xs font-semibold tracking-widest uppercase text-gold">
-            Signature Collection
+            {t('sig_label')}
           </motion.p>
 
           <motion.h2 variants={fadeUp} className="font-playfair text-4xl sm:text-5xl font-bold text-cream leading-tight">
-            Every cake is a
+            {t('sig_heading1')}
             <br />
-            <span className="text-gold">work of art.</span>
+            <span className="text-gold">{t('sig_heading2')}</span>
           </motion.h2>
 
           <motion.p variants={fadeUp} className="text-cream/60 leading-relaxed max-w-md">
-            Handcrafted from premium ingredients, baked fresh for every single order.
-            No pre-made. No compromise. Just pure, gooey, golden perfection —
-            delivered to your door.
+            {t('sig_body')}
           </motion.p>
 
           {/* Stats */}
           <motion.div variants={fadeUp} className="grid grid-cols-3 gap-6 py-6 border-y border-gold/15">
-            {[
-              { number: '500+', label: 'Happy Customers' },
-              { number: '4',    label: 'Signature Flavours' },
-              { number: '100%', label: 'Fresh to Order' },
-            ].map(({ number, label }) => (
+            {stats.map(({ number, label }) => (
               <div key={label}>
                 <p className="font-playfair text-2xl font-bold text-gold">{number}</p>
                 <p className="text-xs text-cream/50 mt-1 leading-snug">{label}</p>
@@ -90,13 +93,13 @@ export function SignatureSection() {
               href="/shop"
               className="inline-flex items-center gap-2 bg-gold text-choco px-7 py-3.5 rounded-full font-bold text-sm hover:bg-gold-light transition-colors cursor-pointer"
             >
-              Order Now <ArrowRight size={16} />
+              {t('sig_order')} <ArrowRight size={16} />
             </Link>
             <Link
               href="/#about"
               className="inline-flex items-center gap-2 border border-gold/40 text-gold px-7 py-3.5 rounded-full font-semibold text-sm hover:border-gold hover:bg-gold/10 transition-all cursor-pointer"
             >
-              Our Story
+              {t('nav_story')}
             </Link>
           </motion.div>
         </motion.div>

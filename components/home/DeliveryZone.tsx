@@ -1,4 +1,7 @@
+'use client'
+
 import { MapPin, Clock, Truck, Phone } from 'lucide-react'
+import { useLang } from '@/contexts/LanguageContext'
 
 const AREAS = [
   'Abdoun',
@@ -15,25 +18,15 @@ const AREAS = [
   'University Area',
 ]
 
-const INFO_CARDS = [
-  {
-    icon: Clock,
-    title:    'Same-day delivery',
-    subtitle: 'Order before 2pm',
-  },
-  {
-    icon: Truck,
-    title:    'Free delivery',
-    subtitle: 'On orders over JD 20',
-  },
-  {
-    icon: Phone,
-    title:    'Order via WhatsApp',
-    subtitle: '+962 7 8900 6574',
-  },
-]
-
 export function DeliveryZone() {
+  const { t } = useLang()
+
+  const INFO_CARDS = [
+    { icon: Clock, title: t('zone_sameday_title'), subtitle: t('zone_sameday_sub') },
+    { icon: Truck, title: t('zone_free_title'),    subtitle: t('zone_free_sub') },
+    { icon: Phone, title: t('order_wa'),           subtitle: t('zone_wa_sub') },
+  ]
+
   return (
     <section className="bg-cream py-20 px-6">
       <div className="max-w-4xl mx-auto">
@@ -41,10 +34,10 @@ export function DeliveryZone() {
         {/* Header */}
         <div className="text-center mb-10">
           <h2 className="font-playfair text-4xl sm:text-5xl text-brown font-bold mb-3">
-            We deliver across Amman
+            {t('zone_heading')}
           </h2>
           <p className="text-brown-light text-base">
-            Same-day delivery available. Order before 2pm.
+            {t('zone_sub')}
           </p>
         </div>
 

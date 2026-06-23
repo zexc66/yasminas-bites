@@ -20,7 +20,6 @@ const springIn = (delay: number) => ({
 export function HeroSection() {
   const ref = useRef<HTMLElement>(null)
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
-  const imgY  = useTransform(scrollYProgress, [0, 1], ['0%', '12%'])
   const textY = useTransform(scrollYProgress, [0, 1], ['0%', '-6%'])
   const { t, dir } = useLang()
 
@@ -185,13 +184,7 @@ export function HeroSection() {
 
           {/* ── RIGHT: image composition ── */}
           <div className="relative flex items-center justify-center lg:justify-end">
-            <motion.div
-              style={{ y: imgY }}
-              initial={{ scale: 0.97 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.95, ease: [0.22, 1, 0.36, 1] }}
-              className="relative"
-            >
+            <div className="relative">
               {/* Main image */}
               <div className="relative w-[300px] h-[390px] sm:w-[360px] sm:h-[470px] lg:w-[420px] lg:h-[560px] rounded-[2.75rem] overflow-hidden shadow-[0_32px_80px_rgba(60,30,8,0.22)]">
                 <Image
@@ -284,7 +277,7 @@ export function HeroSection() {
                 className="absolute inset-[-24px] rounded-[3rem] border border-dashed border-gold/15 pointer-events-none"
                 aria-hidden
               />
-            </motion.div>
+            </div>
           </div>
         </div>
       </div>
