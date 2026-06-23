@@ -194,6 +194,8 @@ export function HeroSection() {
                   className="object-cover"
                   sizes="(max-width: 640px) 300px, (max-width: 1024px) 360px, 420px"
                   priority
+                  fetchPriority="high"
+                  quality={75}
                 />
                 <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-brown/60 via-brown/20 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-6">

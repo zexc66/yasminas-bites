@@ -11,12 +11,6 @@ import { BelowFoldSections }   from '@/components/home/BelowFoldSections'
 export default function Home() {
   return (
     <>
-      <link
-        rel="preload"
-        as="image"
-        href="/images/cookie-biscoff.jpg"
-        fetchPriority="high"
-      />
       <Navbar />
       <main>
         <HeroSection />

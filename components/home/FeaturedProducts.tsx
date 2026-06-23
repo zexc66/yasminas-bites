@@ -15,7 +15,7 @@ export function FeaturedProducts() {
         <div className="text-center mb-14">
           <div className="inline-flex items-center gap-2 bg-gold-pale border border-gold-pale rounded-full px-4 py-1.5 mb-4">
             <span className="w-1.5 h-1.5 rounded-full bg-gold inline-block" />
-            <span className="text-gold text-xs font-bold tracking-widest uppercase">
+            <span className="text-brown text-xs font-bold tracking-widest uppercase">
               Our Collection
             </span>
             <span className="w-1.5 h-1.5 rounded-full bg-gold inline-block" />
