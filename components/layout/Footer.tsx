@@ -1,5 +1,8 @@
+'use client'
+
 import Link from 'next/link'
 import Image from 'next/image'
+import { useLang } from '@/contexts/LanguageContext'
 
 function InstagramIcon() {
   return (
@@ -12,6 +15,8 @@ function InstagramIcon() {
 }
 
 export function Footer() {
+  const { t } = useLang()
+
   return (
     <footer className="bg-cream border-t border-gold-pale/60">
 
@@ -30,29 +35,28 @@ export function Footer() {
             />
           </div>
           <p className="text-sm text-brown-light leading-relaxed max-w-xs">
-            Handcrafted cookie cakes baked fresh to order,
-            delivered across Amman with love.
+            {t('footer_desc')}
           </p>
         </div>
 
         {/* Links */}
         <div>
           <p className="text-xs font-semibold uppercase tracking-widest text-gold mb-5">
-            Navigate
+            {t('footer_nav')}
           </p>
           <ul className="space-y-3 text-sm text-brown-light">
-            <li><Link href="/shop"           className="hover:text-gold transition-colors">Shop All</Link></li>
-            <li><Link href="/gallery"         className="hover:text-gold transition-colors">Gallery</Link></li>
-            <li><Link href="/our-story"      className="hover:text-gold transition-colors">Our Story</Link></li>
-            <li><Link href="/auth/login"     className="hover:text-gold transition-colors">Sign In</Link></li>
-            <li><Link href="/account/orders" className="hover:text-gold transition-colors">My Orders</Link></li>
+            <li><Link href="/shop"           className="hover:text-gold transition-colors">{t('footer_shop_all')}</Link></li>
+            <li><Link href="/gallery"        className="hover:text-gold transition-colors">{t('nav_gallery')}</Link></li>
+            <li><Link href="/our-story"      className="hover:text-gold transition-colors">{t('nav_story')}</Link></li>
+            <li><Link href="/auth/login"     className="hover:text-gold transition-colors">{t('footer_signin')}</Link></li>
+            <li><Link href="/account/orders" className="hover:text-gold transition-colors">{t('footer_orders')}</Link></li>
           </ul>
         </div>
 
         {/* Contact */}
         <div id="contact">
           <p className="text-xs font-semibold uppercase tracking-widest text-gold mb-5">
-            Get in Touch
+            {t('footer_get_in_touch')}
           </p>
           <ul className="space-y-3 text-sm text-brown-light">
             <li>
@@ -80,8 +84,8 @@ export function Footer() {
 
       {/* Bottom bar */}
       <div className="border-t border-gold-pale/50 px-6 py-5 max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-taupe">
-        <span>© {new Date().getFullYear()} Yasmina&apos;s Bites. All rights reserved.</span>
-        <span className="font-dancing text-base text-gold-light">Little bites of happiness</span>
+        <span>© {new Date().getFullYear()} Yasmina&apos;s Bites. {t('footer_copyright')}</span>
+        <span className="font-dancing text-base text-gold-light">{t('footer_tagline')}</span>
       </div>
     </footer>
   )

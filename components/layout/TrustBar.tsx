@@ -1,10 +1,15 @@
-﻿﻿import { Truck, ChefHat, Heart } from 'lucide-react'
+'use client'
+
+import { Truck, ChefHat, Heart } from 'lucide-react'
+import { useLang } from '@/contexts/LanguageContext'
 
 export function TrustBar() {
+  const { t } = useLang()
+
   const items = [
-    { icon: <Truck size={13} />, text: 'Free delivery on orders over JD 20' },
-    { icon: <ChefHat size={13} />, text: 'Baked fresh to order' },
-    { icon: <Heart size={13} />, text: '500+ happy customers' },
+    { icon: <Truck size={13} />, text: t('trust_delivery') },
+    { icon: <ChefHat size={13} />, text: t('trust_fresh') },
+    { icon: <Heart size={13} />, text: t('trust_customers') },
   ]
 
   return (

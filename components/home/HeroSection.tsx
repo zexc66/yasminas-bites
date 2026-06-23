@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { ArrowRight, Star, ChefHat, Truck, Sparkles } from 'lucide-react'
+import { useLang } from '@/contexts/LanguageContext'
 
 const springIn = (delay: number) => ({
   hidden: { opacity: 0, scale: 0.75, y: 16 },
@@ -19,8 +20,9 @@ const springIn = (delay: number) => ({
 export function HeroSection() {
   const ref = useRef<HTMLElement>(null)
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
-  const imgY   = useTransform(scrollYProgress, [0, 1], ['0%', '12%'])
-  const textY  = useTransform(scrollYProgress, [0, 1], ['0%', '-6%'])
+  const imgY  = useTransform(scrollYProgress, [0, 1], ['0%', '12%'])
+  const textY = useTransform(scrollYProgress, [0, 1], ['0%', '-6%'])
+  const { t, dir } = useLang()
 
   return (
     <section ref={ref} className="relative min-h-screen bg-cream overflow-hidden flex items-center">
@@ -40,7 +42,7 @@ export function HeroSection() {
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] rounded-full bg-cream-dark/90 blur-[90px] pointer-events-none translate-y-1/3" aria-hidden />
       <div className="absolute top-1/2 right-1/3 w-[280px] h-[280px] rounded-full bg-taupe/15 blur-[60px] pointer-events-none" aria-hidden />
 
-      {/* Vertical decorative line — far left */}
+      {/* Vertical decorative line */}
       <div className="absolute left-7 top-36 bottom-36 w-px bg-gradient-to-b from-transparent via-gold/25 to-transparent hidden xl:block" aria-hidden />
       <motion.div
         className="absolute left-3 top-1/2 -translate-y-1/2 -rotate-90 hidden xl:flex items-center gap-3 text-[9px] tracking-[0.35em] uppercase text-taupe/70 font-semibold select-none"
@@ -68,7 +70,7 @@ export function HeroSection() {
               className="inline-flex items-center gap-2 w-fit bg-gold/10 border border-gold/25 text-gold text-[10px] font-bold tracking-[0.2em] uppercase px-4 py-2 rounded-full"
             >
               <Sparkles size={10} />
-              Handcrafted · Amman, Jordan
+              {t('hero_badge_top')}
             </motion.div>
 
             {/* Headline — clip reveal */}
@@ -105,7 +107,7 @@ export function HeroSection() {
               className="font-dancing text-gold-light -mt-1"
               style={{ fontSize: 'clamp(1.6rem, 2.8vw, 2.4rem)' }}
             >
-              Little bites of happiness
+              {t('hero_tagline')}
             </motion.p>
 
             {/* Gold line */}
@@ -123,8 +125,7 @@ export function HeroSection() {
               transition={{ duration: 0.6, delay: 0.5 }}
               className="text-brown-light leading-relaxed text-[0.95rem] max-w-[400px]"
             >
-              Artisan cookie cakes baked fresh to order — loaded with the finest
-              chocolate, Biscoff, pistachio, and more. Every bite tells a story.
+              {t('hero_desc')}
             </motion.p>
 
             {/* CTAs */}
@@ -138,14 +139,17 @@ export function HeroSection() {
                 href="/shop"
                 className="group inline-flex items-center gap-2 bg-brown text-cream px-8 py-4 rounded-full font-semibold text-sm hover:bg-gold transition-all duration-300 shadow-xl shadow-brown/20"
               >
-                Shop Now
-                <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform duration-200" />
+                {t('hero_cta_shop')}
+                <ArrowRight
+                  size={15}
+                  className={`transition-transform duration-200 ${dir === 'rtl' ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`}
+                />
               </Link>
               <Link
                 href="/#about"
                 className="inline-flex items-center gap-2 border border-gold/35 text-gold px-8 py-4 rounded-full font-semibold text-sm hover:bg-gold-pale/60 transition-colors"
               >
-                Our Story
+                {t('nav_story')}
               </Link>
             </motion.div>
 
@@ -174,7 +178,7 @@ export function HeroSection() {
                   ))}
                   <span className="text-xs font-bold text-brown ml-1.5">4.9</span>
                 </div>
-                <p className="text-[11px] text-taupe">Loved by 500+ customers in Amman</p>
+                <p className="text-[11px] text-taupe">{t('hero_social_proof')}</p>
               </div>
             </motion.div>
           </motion.div>
@@ -188,7 +192,7 @@ export function HeroSection() {
               transition={{ duration: 0.95, ease: [0.22, 1, 0.36, 1] }}
               className="relative"
             >
-              {/* Main image — tall rounded rectangle */}
+              {/* Main image */}
               <div className="relative w-[300px] h-[390px] sm:w-[360px] sm:h-[470px] lg:w-[420px] lg:h-[560px] rounded-[2.75rem] overflow-hidden shadow-[0_32px_80px_rgba(60,30,8,0.22)]">
                 <Image
                   src="/images/cookie-biscoff.jpg"
@@ -198,27 +202,25 @@ export function HeroSection() {
                   sizes="(max-width: 640px) 300px, (max-width: 1024px) 360px, 420px"
                   priority
                 />
-                {/* Gradient overlay at bottom */}
                 <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-brown/60 via-brown/20 to-transparent" />
-                {/* Caption on image */}
                 <div className="absolute bottom-0 left-0 right-0 p-6">
                   <p className="font-dancing text-cream/95 text-2xl leading-tight">Biscoff Caramel Drizzle</p>
-                  <p className="text-cream/65 text-[11px] font-medium mt-0.5 tracking-wide">Most loved · 312 happy reviews</p>
+                  <p className="text-cream/65 text-[11px] font-medium mt-0.5 tracking-wide">{t('hero_most_loved')}</p>
                 </div>
               </div>
 
-              {/* Badge: Price — top right */}
+              {/* Badge: Price */}
               <motion.div
                 variants={springIn(0.8)}
                 initial="hidden"
                 animate="show"
                 className="absolute -top-5 -right-6 lg:-right-10 bg-gold text-cream rounded-2xl px-5 py-3 shadow-xl shadow-gold/35 flex flex-col items-center min-w-[88px]"
               >
-                <span className="text-[9px] font-bold uppercase tracking-widest opacity-75">From</span>
+                <span className="text-[9px] font-bold uppercase tracking-widest opacity-75">{t('hero_from')}</span>
                 <span className="font-playfair font-bold text-2xl leading-snug">JD 14</span>
               </motion.div>
 
-              {/* Badge: Rating — left middle */}
+              {/* Badge: Rating */}
               <motion.div
                 variants={springIn(1.0)}
                 initial="hidden"
@@ -230,11 +232,11 @@ export function HeroSection() {
                 </div>
                 <div>
                   <p className="font-playfair font-bold text-brown text-lg leading-none">4.9</p>
-                  <p className="text-[10px] text-brown-light mt-0.5">312 reviews</p>
+                  <p className="text-[10px] text-brown-light mt-0.5">312 {t('hero_reviews')}</p>
                 </div>
               </motion.div>
 
-              {/* Badge: Fresh baked — bottom left */}
+              {/* Badge: Fresh baked */}
               <motion.div
                 variants={springIn(1.15)}
                 initial="hidden"
@@ -243,12 +245,12 @@ export function HeroSection() {
               >
                 <div className="flex items-center gap-2 mb-0.5">
                   <ChefHat size={13} className="text-gold shrink-0" />
-                  <span className="text-xs font-bold text-brown">Fresh baked</span>
+                  <span className="text-xs font-bold text-brown">{t('hero_fresh_baked')}</span>
                 </div>
-                <p className="text-[10px] text-brown-light">To order, every time</p>
+                <p className="text-[10px] text-brown-light">{t('hero_fresh_sub')}</p>
               </motion.div>
 
-              {/* Badge: Delivery — bottom right */}
+              {/* Badge: Delivery */}
               <motion.div
                 variants={springIn(1.05)}
                 initial="hidden"
@@ -256,10 +258,10 @@ export function HeroSection() {
                 className="absolute -bottom-3 -right-4 lg:-right-8 bg-brown text-cream rounded-xl px-3.5 py-2 shadow-xl flex items-center gap-2 text-xs font-semibold"
               >
                 <Truck size={13} className="shrink-0" />
-                Amman delivery
+                {t('hero_delivery')}
               </motion.div>
 
-              {/* Mini thumbnail — pistachio, top left peeking */}
+              {/* Mini thumbnail */}
               <motion.div
                 variants={springIn(1.3)}
                 initial="hidden"
@@ -275,7 +277,7 @@ export function HeroSection() {
                 />
               </motion.div>
 
-              {/* Floating gentle-bob ring behind the image */}
+              {/* Rotating ring */}
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ repeat: Infinity, duration: 40, ease: 'linear' }}
