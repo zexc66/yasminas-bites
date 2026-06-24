@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Playfair_Display, Dancing_Script, Inter, Noto_Sans_Arabic } from 'next/font/google'
 import { Providers } from '@/components/Providers'
 import './globals.css'
@@ -36,7 +36,6 @@ export const metadata: Metadata = {
   description:
     'Artisan cookie cakes handcrafted with love. Chocolate chip, Biscoff caramel, pistachio, and more. Order yours today.',
   manifest: '/manifest.json',
-  themeColor: '#8B7020',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
@@ -47,6 +46,10 @@ export const metadata: Metadata = {
     shortcut: '/images/logo.svg',
     apple: '/apple-touch-icon.png',
   },
+}
+
+export const viewport: Viewport = {
+  themeColor: '#8B7020',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
