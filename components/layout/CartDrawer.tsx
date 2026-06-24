@@ -6,9 +6,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useCart } from '@/lib/cartStore'
 import { useLang } from '@/contexts/LanguageContext'
+import { getProductName } from '@/lib/products'
 
 export function CartDrawer() {
-  const { t } = useLang()
+  const { t, lang } = useLang()
   const { isCartOpen, closeCart, items, removeItem, updateQuantity, subtotal } = useCart()
   const count = items.reduce((s, i) => s + i.quantity, 0)
 
@@ -84,7 +85,7 @@ export function CartDrawer() {
                       <div className="relative w-16 h-16 rounded-xl overflow-hidden flex-shrink-0">
                         <Image
                           src={product.image}
-                          alt={product.name}
+                          alt={getProductName(product, lang)}
                           fill
                           className="object-cover"
                           sizes="64px"
@@ -93,7 +94,7 @@ export function CartDrawer() {
 
                       {/* Info + controls */}
                       <div className="flex-1 min-w-0">
-                        <p className="font-medium text-brown text-sm truncate">{product.name}</p>
+                        <p className="font-medium text-brown text-sm truncate">{getProductName(product, lang)}</p>
                         <p className="text-xs text-brown-light mt-0.5">
                           JD {product.price.toFixed(2)} {t('cart_each')}
                         </p>
@@ -128,7 +129,7 @@ export function CartDrawer() {
                         <button
                           onClick={() => removeItem(product.id)}
                           className="text-taupe hover:text-brown transition-colors cursor-pointer"
-                          aria-label={`Remove ${product.name}`}
+                          aria-label={`Remove ${getProductName(product, lang)}`}
                         >
                           <Trash2 size={15} />
                         </button>

@@ -6,8 +6,10 @@ import { useLang } from '@/contexts/LanguageContext'
 
 interface Bundle {
   name:     string
+  nameAr:   string
   badge:    string
   items:    string[]
+  itemsAr:  string[]
   was:      number
   now:      number
   save:     number
@@ -26,12 +28,30 @@ const cardVariants = {
 }
 
 export function BundleSection() {
-  const { t } = useLang()
+  const { t, lang } = useLang()
 
   const BUNDLES: Bundle[] = [
-    { name: 'The Classic Duo',      badge: t('bundle_badge_popular'), items: ['Biscoff Caramel', 'Cookie Bites Box'],                                   was: 40, now: 34, save: 6  },
-    { name: 'The Gift Set',         badge: t('bundle_badge_gift'),    items: ['Pistachio Drizzle', 'Pop Cakes Box (6)'],                                 was: 40, now: 33, save: 7  },
-    { name: 'The Full Experience',  badge: t('bundle_badge_value'),   items: ['Biscoff Caramel', 'Pistachio Drizzle', 'Pop Cakes Box', 'Cookie Bites Box'], was: 80, now: 64, save: 16 },
+    {
+      name: 'The Classic Duo',     nameAr: 'الثنائي الكلاسيكي',
+      badge: t('bundle_badge_popular'),
+      items: ['Biscoff Caramel', 'Cookie Bites Box'],
+      itemsAr: ['كيك البيسكوف بالكراميل', 'صندوق قطع الكوكيز'],
+      was: 40, now: 34, save: 6,
+    },
+    {
+      name: 'The Gift Set',        nameAr: 'طقم الهدية',
+      badge: t('bundle_badge_gift'),
+      items: ['Pistachio Drizzle', 'Pop Cakes Box (6)'],
+      itemsAr: ['كيك الفستق بالصوص', 'بوب كيك (٦ حبات)'],
+      was: 40, now: 33, save: 7,
+    },
+    {
+      name: 'The Full Experience', nameAr: 'التجربة الكاملة',
+      badge: t('bundle_badge_value'),
+      items: ['Biscoff Caramel', 'Pistachio Drizzle', 'Pop Cakes Box', 'Cookie Bites Box'],
+      itemsAr: ['كيك البيسكوف', 'كيك الفستق', 'بوب كيك', 'صندوق قطع الكوكيز'],
+      was: 80, now: 64, save: 16,
+    },
   ]
 
   return (
@@ -69,12 +89,12 @@ export function BundleSection() {
 
               {/* Bundle name */}
               <h3 className="font-playfair text-xl font-bold text-brown mb-4 pr-24">
-                {bundle.name}
+                {lang === 'ar' ? bundle.nameAr : bundle.name}
               </h3>
 
               {/* Items */}
               <ul className="flex flex-col gap-2 mb-6">
-                {bundle.items.map((item) => (
+                {(lang === 'ar' ? bundle.itemsAr : bundle.items).map((item) => (
                   <li key={item} className="flex items-center gap-2 text-brown text-sm">
                     <Check size={14} className="text-gold shrink-0" />
                     {item}
@@ -100,7 +120,7 @@ export function BundleSection() {
 
                 {/* WhatsApp CTA */}
                 <a
-                  href={`https://wa.me/962789006574?text=Hi! I'd like to order ${encodeURIComponent(bundle.name)}`}
+                  href={`https://wa.me/962789006574?text=Hi! I'd like to order ${encodeURIComponent(bundle.name)} (${bundle.now} JD)`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block w-full text-center bg-brown text-cream text-sm font-semibold py-3 rounded-2xl hover:bg-brown-light transition-colors duration-200"

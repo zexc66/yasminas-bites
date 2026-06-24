@@ -3,12 +3,12 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight } from 'lucide-react'
-import { getFeaturedProducts } from '@/lib/products'
+import { getFeaturedProducts, getProductName, getProductDescription } from '@/lib/products'
 import { StarRating } from '@/components/ui/StarRating'
 import { useLang } from '@/contexts/LanguageContext'
 
 export function FeaturedProducts() {
-  const { t } = useLang()
+  const { t, lang } = useLang()
   const products = getFeaturedProducts()
 
   return (
@@ -44,7 +44,7 @@ export function FeaturedProducts() {
               <div className="relative h-56 bg-gold-pale overflow-hidden">
                 <Image
                   src={product.image}
-                  alt={product.name}
+                  alt={getProductName(product, lang)}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -54,7 +54,7 @@ export function FeaturedProducts() {
               {/* Info */}
               <div className="p-6">
                 <h3 className="font-playfair text-xl font-bold text-brown mb-1 group-hover:text-gold transition-colors">
-                  {product.name}
+                  {getProductName(product, lang)}
                 </h3>
                 {product.rating && (
                   <div className="mb-3">
@@ -62,7 +62,7 @@ export function FeaturedProducts() {
                   </div>
                 )}
                 <p className="text-sm text-brown-light leading-relaxed line-clamp-2 mb-4">
-                  {product.description}
+                  {getProductDescription(product, lang)}
                 </p>
                 <div className="flex items-center justify-between">
                   <span className="font-bold text-gold text-lg">

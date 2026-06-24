@@ -6,10 +6,11 @@ import { Navbar }    from '@/components/layout/Navbar'
 import { Footer }    from '@/components/layout/Footer'
 import { useCart }   from '@/lib/cartStore'
 import { useLang }   from '@/contexts/LanguageContext'
+import { getProductName } from '@/lib/products'
 import { Trash2, ArrowRight, ShoppingBag } from 'lucide-react'
 
 export default function CartPage() {
-  const { t } = useLang()
+  const { t, lang } = useLang()
   const { items, removeItem, updateQuantity, subtotal } = useCart()
 
   if (items.length === 0) {
@@ -53,7 +54,7 @@ export default function CartPage() {
                   <div className="relative w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 bg-gold-pale">
                     <Image
                       src={product.image}
-                      alt={product.name}
+                      alt={getProductName(product, lang)}
                       fill
                       className="object-cover"
                     />
@@ -61,7 +62,7 @@ export default function CartPage() {
 
                   {/* Details */}
                   <div className="flex-1 min-w-0">
-                    <h3 className="font-playfair font-bold text-brown truncate">{product.name}</h3>
+                    <h3 className="font-playfair font-bold text-brown truncate">{getProductName(product, lang)}</h3>
                     <p className="text-gold font-semibold text-sm mt-0.5">
                       JD {product.price.toFixed(2)} {t('cart_each')}
                     </p>

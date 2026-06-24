@@ -1,7 +1,9 @@
 export interface Product {
   id: string
   name: string
+  nameAr: string
   description: string
+  descriptionAr: string
   price: number
   image: string
   featured: boolean

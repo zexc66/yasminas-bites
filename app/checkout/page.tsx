@@ -9,6 +9,7 @@ import { PayPalButton } from '@/components/checkout/PayPalButton'
 import { stripePromise } from '@/lib/stripe'
 import { useCart }      from '@/lib/cartStore'
 import { useLang }      from '@/contexts/LanguageContext'
+import { getProductName } from '@/lib/products'
 import { whatsappOrderUrl } from '@/lib/whatsapp'
 import {
   Truck, CreditCard, Banknote, CheckCircle2, Copy, ExternalLink,
@@ -32,7 +33,7 @@ interface CodForm {
 }
 
 export default function CheckoutPage() {
-  const { t } = useLang()
+  const { t, lang } = useLang()
   const { items, subtotal, clearCart } = useCart()
   const [method, setMethod]       = useState<Method>('cod')
   const [clientSecret, setCS]     = useState<string | null>(null)
@@ -382,14 +383,14 @@ export default function CheckoutPage() {
                       <div className="relative w-12 h-12 rounded-xl overflow-hidden bg-cream-dark shrink-0">
                         <Image
                           src={product.image}
-                          alt={product.name}
+                          alt={getProductName(product, lang)}
                           fill
                           className="object-cover"
                           sizes="48px"
                         />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-semibold text-brown truncate">{product.name}</p>
+                        <p className="text-sm font-semibold text-brown truncate">{getProductName(product, lang)}</p>
                         <p className="text-xs text-brown-light">{t('pay_qty')} {quantity}</p>
                       </div>
                       <p className="text-sm font-bold text-brown shrink-0">

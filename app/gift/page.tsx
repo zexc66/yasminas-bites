@@ -7,14 +7,14 @@ import { Footer } from '@/components/layout/Footer'
 import { useLang } from '@/contexts/LanguageContext'
 
 const giftProducts = [
-  { id: 'biscoff-caramel', name: 'Biscoff Caramel Drizzle', price: 22, image: '/images/cookie-biscoff.jpg' },
-  { id: 'pistachio-delight', name: 'Pistachio Drizzle Cake', price: 24, image: '/images/cookie-pistachio.jpg' },
-  { id: 'pistachio-molten', name: 'Pistachio Molten Cookie', price: 14, image: '/images/cookie-molten-pistachio.png' },
-  { id: 'pop-cake', name: 'Valentine Pop Cakes', price: 16, image: '/images/cookie-pop-cake.png' },
+  { id: 'biscoff-caramel',   name: 'Biscoff Caramel Drizzle', nameAr: 'كيك البيسكوف بالكراميل', price: 22, image: '/images/cookie-biscoff.jpg' },
+  { id: 'pistachio-delight', name: 'Pistachio Drizzle Cake',  nameAr: 'كيك الفستق بالصوص',      price: 24, image: '/images/cookie-pistachio.jpg' },
+  { id: 'pistachio-molten',  name: 'Pistachio Molten Cookie', nameAr: 'كوكيز الفستق المنصهر',   price: 14, image: '/images/cookie-molten-pistachio.png' },
+  { id: 'pop-cake',          name: 'Valentine Pop Cakes',     nameAr: 'بوب كيك عيد الحب',       price: 16, image: '/images/cookie-pop-cake.png' },
 ]
 
 export default function GiftPage() {
-  const { t } = useLang()
+  const { t, lang } = useLang()
   const [selectedProduct, setSelectedProduct] = useState<typeof giftProducts[0] | null>(null)
   const [recipient, setRecipient] = useState('')
   const [message, setMessage] = useState('')
@@ -80,7 +80,7 @@ export default function GiftPage() {
                     <div className="relative aspect-square w-full">
                       <Image
                         src={product.image}
-                        alt={product.name}
+                        alt={lang === 'ar' ? product.nameAr : product.name}
                         fill
                         className="object-cover"
                         sizes="(max-width: 640px) 50vw, 25vw"
@@ -88,7 +88,7 @@ export default function GiftPage() {
                     </div>
                     <div className="p-3">
                       <p className="font-inter text-sm font-semibold text-brown leading-snug">
-                        {product.name}
+                        {lang === 'ar' ? product.nameAr : product.name}
                       </p>
                       <p className="font-inter text-sm text-gold font-semibold mt-1">
                         JD {product.price}
@@ -180,7 +180,7 @@ export default function GiftPage() {
               <div className="flex justify-between font-inter text-sm">
                 <span className="text-taupe">{t('gift_treat_label')}</span>
                 <span className="text-brown font-medium">
-                  {selectedProduct ? `${selectedProduct.name} — JD ${selectedProduct.price}` : '—'}
+                  {selectedProduct ? `${lang === 'ar' ? selectedProduct.nameAr : selectedProduct.name} — JD ${selectedProduct.price}` : '—'}
                 </span>
               </div>
               <div className="flex justify-between font-inter text-sm">

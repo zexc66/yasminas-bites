@@ -7,7 +7,7 @@ import { motion } from 'framer-motion'
 import { ShoppingBag, Star, MessageCircle } from 'lucide-react'
 import { useCart } from '@/lib/cartStore'
 import { Product } from '@/types'
-import { products } from '@/lib/products'
+import { products, getProductName, getProductDescription } from '@/lib/products'
 import { useLang } from '@/contexts/LanguageContext'
 import toast from 'react-hot-toast'
 import { whatsappOrderUrl } from '@/lib/whatsapp'
@@ -34,13 +34,15 @@ const mockReviews = [
 ]
 
 export function ProductClient({ product }: { product: Product }) {
-  const { t } = useLang()
+  const { t, lang } = useLang()
   const addItem = useCart((s) => s.addItem)
   const [qty, setQty] = useState(1)
+  const name = getProductName(product, lang)
+  const description = getProductDescription(product, lang)
 
   const handleAdd = () => {
     addItem(product, qty)
-    toast.success(`${product.name} added to cart`)
+    toast.success(`${name} added to cart`)
   }
 
   const related = products.filter((p) => p.id !== product.id).slice(0, 3)
@@ -62,7 +64,7 @@ export function ProductClient({ product }: { product: Product }) {
           >
             <Image
               src={product.image}
-              alt={product.name}
+              alt={name}
               fill
               className="object-cover"
               sizes="(max-width: 1024px) 100vw, 50vw"
@@ -87,12 +89,12 @@ export function ProductClient({ product }: { product: Product }) {
 
             <div>
               <h1 className="font-playfair text-4xl font-bold text-brown mb-2">
-                {product.name}
+                {name}
               </h1>
               <p className="text-3xl font-bold text-gold">JD {product.price.toFixed(2)}</p>
             </div>
 
-            <p className="text-brown-light leading-relaxed">{product.description}</p>
+            <p className="text-brown-light leading-relaxed">{description}</p>
 
             {/* Quantity */}
             <div className="flex items-center gap-4">
@@ -125,7 +127,7 @@ export function ProductClient({ product }: { product: Product }) {
 
             {/* WhatsApp order button */}
             <a
-              href={whatsappOrderUrl(product.name, qty)}
+              href={whatsappOrderUrl(name, qty)}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-3 bg-[#25D366] text-white py-4 rounded-full font-semibold hover:bg-[#20b858] transition-colors shadow-md text-sm cursor-pointer"
@@ -183,14 +185,14 @@ export function ProductClient({ product }: { product: Product }) {
                 <div className="relative w-full aspect-square rounded-2xl overflow-hidden bg-cream-dark mb-3">
                   <Image
                     src={p.image}
-                    alt={p.name}
+                    alt={getProductName(p, lang)}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
                     sizes="(max-width: 768px) 33vw, 25vw"
                   />
                 </div>
                 <p className="font-playfair text-base font-semibold text-brown leading-tight mb-1">
-                  {p.name}
+                  {getProductName(p, lang)}
                 </p>
                 <p className="text-gold font-bold text-sm">JD {p.price.toFixed(2)}</p>
               </Link>
@@ -202,7 +204,7 @@ export function ProductClient({ product }: { product: Product }) {
       {/* Mobile sticky CTA — hidden on desktop */}
       <div className="fixed bottom-0 inset-x-0 z-40 lg:hidden bg-cream border-t border-gold-pale px-4 py-3 flex items-center gap-3">
         <div className="flex-1">
-          <p className="text-xs text-brown-light font-medium truncate">{product.name}</p>
+          <p className="text-xs text-brown-light font-medium truncate">{name}</p>
           <p className="text-base font-bold text-gold">JD {(product.price * qty).toFixed(2)}</p>
         </div>
         <button

@@ -9,30 +9,31 @@ interface GalleryItem {
   src: string
   alt: string
   name: string
+  nameAr: string
   height: string
 }
 
 const GALLERY_ITEMS: GalleryItem[] = [
-  { src: '/images/cookie-biscoff.jpg',           alt: 'Biscoff Caramel Cookie Cake',    name: 'Biscoff Caramel',       height: 'h-80'  },
-  { src: '/images/cookie-pistachio.jpg',          alt: 'Pistachio Cookie Cake',          name: 'Pistachio Dream',       height: 'h-64'  },
-  { src: '/images/cookie-molten-pistachio.png',   alt: 'Molten Pistachio Cookie Cake',   name: 'Molten Pistachio',      height: 'h-96'  },
-  { src: '/images/cookie-choc-chip.jpg',          alt: 'Chocolate Chip Cookie Cake',     name: 'Classic Choc Chip',     height: 'h-48'  },
-  { src: '/images/cookie-pop-cake.png',           alt: 'Pop Cake Cookie',                name: 'Pop Cake Delight',      height: 'h-80'  },
-  { src: '/images/cookie-pistachio.jpg',          alt: 'Pistachio Cookie Cake',          name: 'Pistachio Bliss',       height: 'h-64'  },
-  { src: '/images/cookie-choc-chip.jpg',          alt: 'Chocolate Chip Cookie Cake',     name: 'Choc Chip Heaven',      height: 'h-96'  },
-  { src: '/images/cookie-biscoff.jpg',            alt: 'Biscoff Caramel Cookie Cake',    name: 'Biscoff Special',       height: 'h-48'  },
-  { src: '/images/cookie-molten-pistachio.png',   alt: 'Molten Pistachio Cookie Cake',   name: 'Pistachio Lava',        height: 'h-80'  },
-  { src: '/images/cookie-pop-cake.png',           alt: 'Pop Cake Cookie',                name: 'Cake Pop Treat',        height: 'h-64'  },
-  { src: '/images/cookie-biscoff.jpg',            alt: 'Biscoff Caramel Cookie Cake',    name: 'Caramel Biscoff',       height: 'h-48'  },
-  { src: '/images/cookie-pistachio.jpg',          alt: 'Pistachio Cookie Cake',          name: 'Green Gold',            height: 'h-96'  },
-  { src: '/images/cookie-choc-chip.jpg',          alt: 'Chocolate Chip Cookie Cake',     name: 'Golden Chips',          height: 'h-64'  },
-  { src: '/images/cookie-molten-pistachio.png',   alt: 'Molten Pistachio Cookie Cake',   name: 'Molten Heart',          height: 'h-80'  },
-  { src: '/images/cookie-pop-cake.png',           alt: 'Pop Cake Cookie',                name: 'Festive Pop Cake',      height: 'h-48'  },
-  { src: '/images/cookie-biscoff.jpg',            alt: 'Biscoff Caramel Cookie Cake',    name: 'Biscoff Indulgence',    height: 'h-96'  },
+  { src: '/images/cookie-biscoff.jpg',           alt: 'Biscoff Caramel Cookie Cake',    name: 'Biscoff Caramel',       nameAr: 'بيسكوف كراميل',         height: 'h-80'  },
+  { src: '/images/cookie-pistachio.jpg',          alt: 'Pistachio Cookie Cake',          name: 'Pistachio Dream',       nameAr: 'حلم الفستق',             height: 'h-64'  },
+  { src: '/images/cookie-molten-pistachio.png',   alt: 'Molten Pistachio Cookie Cake',   name: 'Molten Pistachio',      nameAr: 'فستق منصهر',             height: 'h-96'  },
+  { src: '/images/cookie-choc-chip.jpg',          alt: 'Chocolate Chip Cookie Cake',     name: 'Classic Choc Chip',     nameAr: 'شوكولاتة كلاسيك',       height: 'h-48'  },
+  { src: '/images/cookie-pop-cake.png',           alt: 'Pop Cake Cookie',                name: 'Pop Cake Delight',      nameAr: 'بوب كيك شهي',           height: 'h-80'  },
+  { src: '/images/cookie-pistachio.jpg',          alt: 'Pistachio Cookie Cake',          name: 'Pistachio Bliss',       nameAr: 'نعيم الفستق',            height: 'h-64'  },
+  { src: '/images/cookie-choc-chip.jpg',          alt: 'Chocolate Chip Cookie Cake',     name: 'Choc Chip Heaven',      nameAr: 'جنة الشوكولاتة',        height: 'h-96'  },
+  { src: '/images/cookie-biscoff.jpg',            alt: 'Biscoff Caramel Cookie Cake',    name: 'Biscoff Special',       nameAr: 'بيسكوف مميز',           height: 'h-48'  },
+  { src: '/images/cookie-molten-pistachio.png',   alt: 'Molten Pistachio Cookie Cake',   name: 'Pistachio Lava',        nameAr: 'حمم الفستق',             height: 'h-80'  },
+  { src: '/images/cookie-pop-cake.png',           alt: 'Pop Cake Cookie',                name: 'Cake Pop Treat',        nameAr: 'متعة بوب كيك',          height: 'h-64'  },
+  { src: '/images/cookie-biscoff.jpg',            alt: 'Biscoff Caramel Cookie Cake',    name: 'Caramel Biscoff',       nameAr: 'كراميل بيسكوف',         height: 'h-48'  },
+  { src: '/images/cookie-pistachio.jpg',          alt: 'Pistachio Cookie Cake',          name: 'Green Gold',            nameAr: 'الذهب الأخضر',          height: 'h-96'  },
+  { src: '/images/cookie-choc-chip.jpg',          alt: 'Chocolate Chip Cookie Cake',     name: 'Golden Chips',          nameAr: 'رقائق ذهبية',           height: 'h-64'  },
+  { src: '/images/cookie-molten-pistachio.png',   alt: 'Molten Pistachio Cookie Cake',   name: 'Molten Heart',          nameAr: 'قلب منصهر',             height: 'h-80'  },
+  { src: '/images/cookie-pop-cake.png',           alt: 'Pop Cake Cookie',                name: 'Festive Pop Cake',      nameAr: 'بوب كيك احتفالي',       height: 'h-48'  },
+  { src: '/images/cookie-biscoff.jpg',            alt: 'Biscoff Caramel Cookie Cake',    name: 'Biscoff Indulgence',    nameAr: 'متعة البيسكوف',         height: 'h-96'  },
 ]
 
 export function GalleryContent() {
-  const { t } = useLang()
+  const { t, lang } = useLang()
 
   return (
     <>
@@ -100,14 +101,14 @@ export function GalleryContent() {
               {/* Hover content */}
               <div className="absolute inset-0 flex flex-col items-center justify-end p-5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-2 group-hover:translate-y-0" style={{ transition: 'opacity 300ms, transform 300ms' }}>
                 <p className="font-playfair text-cream font-semibold text-lg leading-tight text-center mb-3">
-                  {item.name}
+                  {lang === 'ar' ? item.nameAr : item.name}
                 </p>
                 <a
                   href={WHATSAPP}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 bg-gold hover:bg-gold-light text-cream text-sm font-semibold px-5 py-2.5 rounded-full transition-colors duration-200 cursor-pointer"
-                  aria-label={`Order ${item.name} via WhatsApp`}
+                  aria-label={`Order ${lang === 'ar' ? item.nameAr : item.name} via WhatsApp`}
                 >
                   {t('sig_order')}
                 </a>
@@ -116,7 +117,7 @@ export function GalleryContent() {
               {/* Always-visible subtle label on mobile (no hover) */}
               <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-choco/70 to-transparent p-3 md:hidden">
                 <p className="font-playfair text-cream text-sm font-medium text-center">
-                  {item.name}
+                  {lang === 'ar' ? item.nameAr : item.name}
                 </p>
               </div>
             </div>
