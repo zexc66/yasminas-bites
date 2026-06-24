@@ -22,8 +22,7 @@ import { db } from '@/lib/firebase'
 
 type Method = 'cod' | 'cliq' | 'card' | 'paypal'
 
-const CLIQ_ALIAS = '0789006574'
-const CLIQ_PHONE = '+962 7 8900 6574'
+const CLIQ_ALIAS = 'yasminabites'
 
 interface CodForm {
   name: string
@@ -323,11 +322,6 @@ export default function CheckoutPage() {
                         <Copy size={12} />
                         Copy
                       </button>
-                    </div>
-                    <div className="h-px bg-gold-pale" />
-                    <div>
-                      <p className="text-[10px] font-bold uppercase tracking-widest text-brown-light mb-0.5">{t('pay_cliq_or_phone')}</p>
-                      <p className="font-semibold text-brown">{CLIQ_PHONE}</p>
                     </div>
                   </div>
 
