@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { ShoppingBag, Star, MessageCircle } from 'lucide-react'
 import { useCart } from '@/lib/cartStore'
@@ -11,32 +11,46 @@ import { products, getProductName, getProductDescription } from '@/lib/products'
 import { useLang } from '@/contexts/LanguageContext'
 import toast from 'react-hot-toast'
 import { whatsappOrderUrl } from '@/lib/whatsapp'
+import { collection, query, where, orderBy, limit, getDocs, Timestamp } from 'firebase/firestore'
+import { db } from '@/lib/firebase'
 
-const mockReviews = [
-  {
-    initials: 'EL',
-    name: 'Emma L.',
-    date: 'June 2025',
-    text: "Absolutely perfect for my sister's birthday. Everyone was asking where I ordered from. Will definitely be back!",
-  },
-  {
-    initials: 'MW',
-    name: 'Marcus W.',
-    date: 'May 2025',
-    text: 'The packaging is beautiful and the taste is incredible. Arrived perfectly fresh. 10/10 recommend.',
-  },
-  {
-    initials: 'AR',
-    name: 'Aisha R.',
-    date: 'April 2025',
-    text: "I've ordered 3 times now and it never disappoints. The quality and freshness is unmatched.",
-  },
-]
+interface FirestoreReview {
+  id: string
+  productId: string
+  name: string
+  rating: number
+  text: string
+  approved: boolean
+  createdAt: Timestamp
+}
 
 export function ProductClient({ product }: { product: Product }) {
   const { t, lang } = useLang()
   const addItem = useCart((s) => s.addItem)
   const [qty, setQty] = useState(1)
+  const [reviews, setReviews] = useState<FirestoreReview[]>([])
+  const [reviewsLoading, setReviewsLoading] = useState(true)
+
+  useEffect(() => {
+    if (!db) {
+      setReviewsLoading(false)
+      return
+    }
+    const q = query(
+      collection(db, 'reviews'),
+      where('productId', '==', product.id),
+      where('approved', '==', true),
+      orderBy('createdAt', 'desc'),
+      limit(6)
+    )
+    getDocs(q)
+      .then((snap) => {
+        setReviews(snap.docs.map((d) => ({ id: d.id, ...d.data() } as FirestoreReview)))
+      })
+      .catch(() => {})
+      .finally(() => setReviewsLoading(false))
+  }, [product.id])
+
   const name = getProductName(product, lang)
   const description = getProductDescription(product, lang)
 
@@ -153,27 +167,65 @@ export function ProductClient({ product }: { product: Product }) {
         {/* Reviews section */}
         <section className="mt-20">
           <h2 className="font-playfair text-2xl text-brown mb-8">{t('testimonials_label')}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {mockReviews.map((review) => (
-              <div key={review.name} className="bg-cream-dark rounded-2xl p-5">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-9 h-9 rounded-full bg-gold-pale flex items-center justify-center text-gold font-bold text-sm shrink-0">
-                    {review.initials}
+
+          {reviewsLoading ? (
+            /* Skeleton */
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[0, 1, 2].map((i) => (
+                <div key={i} className="bg-cream-dark rounded-2xl p-5 animate-pulse">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-9 h-9 rounded-full bg-gold-pale/60 shrink-0" />
+                    <div className="flex flex-col gap-1.5">
+                      <div className="h-3 w-24 bg-gold-pale/60 rounded" />
+                      <div className="h-2.5 w-16 bg-gold-pale/40 rounded" />
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-sm font-semibold text-brown">{review.name}</p>
-                    <p className="text-xs text-brown-light">{review.date}</p>
+                  <div className="flex gap-0.5 mb-3">
+                    {[...Array(5)].map((_, j) => (
+                      <div key={j} className="w-3 h-3 rounded-full bg-gold-pale/60" />
+                    ))}
+                  </div>
+                  <div className="space-y-1.5">
+                    <div className="h-2.5 bg-gold-pale/40 rounded w-full" />
+                    <div className="h-2.5 bg-gold-pale/40 rounded w-4/5" />
+                    <div className="h-2.5 bg-gold-pale/40 rounded w-3/5" />
                   </div>
                 </div>
-                <div className="flex items-center gap-0.5 mb-3">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={13} className="fill-gold text-gold" />
-                  ))}
+              ))}
+            </div>
+          ) : reviews.length === 0 ? (
+            /* Empty state */
+            <div className="flex flex-col items-center py-12 text-center gap-3">
+              <Star size={32} className="text-gold-pale" />
+              <p className="text-brown-light text-sm">{t('rev_be_first')}</p>
+            </div>
+          ) : (
+            /* Real reviews */
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {reviews.map((review) => (
+                <div key={review.id} className="bg-cream-dark rounded-2xl p-5">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-9 h-9 rounded-full bg-gold-pale flex items-center justify-center text-gold font-bold text-sm shrink-0">
+                      {review.name.charAt(0).toUpperCase()}
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-brown">{review.name}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-0.5 mb-3">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        size={13}
+                        className={i < review.rating ? 'fill-gold text-gold' : 'fill-gold-pale text-gold-pale'}
+                      />
+                    ))}
+                  </div>
+                  <p className="text-sm text-brown-light leading-relaxed">{review.text}</p>
                 </div>
-                <p className="text-sm text-brown-light leading-relaxed">{review.text}</p>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </section>
 
         {/* Related products */}
