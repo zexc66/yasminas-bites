@@ -35,10 +35,17 @@ export const metadata: Metadata = {
   title: "Yasmina's Bites — Little Bites of Happiness",
   description:
     'Artisan cookie cakes handcrafted with love. Chocolate chip, Biscoff caramel, pistachio, and more. Order yours today.',
+  manifest: '/manifest.json',
+  themeColor: '#8B7020',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: "Yasmina's Bites",
+  },
   icons: {
     icon: '/images/logo.svg',
     shortcut: '/images/logo.svg',
-    apple: '/images/logo.svg',
+    apple: '/apple-touch-icon.png',
   },
 }
 
