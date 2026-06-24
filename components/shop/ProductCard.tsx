@@ -1,4 +1,4 @@
-﻿﻿'use client'
+'use client'
 
 import Link from 'next/link'
 import Image from 'next/image'
@@ -7,24 +7,27 @@ import { motion } from 'framer-motion'
 import { useCart } from '@/lib/cartStore'
 import { Product } from '@/types'
 import { StarRating } from '@/components/ui/StarRating'
+import { useLang } from '@/contexts/LanguageContext'
+import { TranslationKey } from '@/lib/i18n'
 import toast from 'react-hot-toast'
 
-const BADGE_MAP: Record<string, { label: string; className: string }> = {
+const BADGE_MAP: Record<string, { key: TranslationKey; className: string }> = {
   'classic-choc-chip': {
-    label: 'Most Popular',
+    key: 'badge_popular',
     className: 'bg-gold text-cream',
   },
   'biscoff-caramel': {
-    label: 'Most Popular',
+    key: 'badge_popular',
     className: 'bg-gold text-cream',
   },
   'pistachio-delight': {
-    label: 'New Flavour',
+    key: 'badge_new',
     className: 'bg-brown text-cream',
   },
 }
 
 export function ProductCard({ product }: { product: Product }) {
+  const { t } = useLang()
   const addItem = useCart((s) => s.addItem)
   const badge = BADGE_MAP[product.id]
 
@@ -56,7 +59,7 @@ export function ProductCard({ product }: { product: Product }) {
             <span
               className={`absolute top-3 left-3 ${badge.className} text-[10px] font-bold px-2.5 py-1 rounded-full`}
             >
-              {badge.label}
+              {t(badge.key)}
             </span>
           )}
         </div>
@@ -80,7 +83,7 @@ export function ProductCard({ product }: { product: Product }) {
               onClick={handleAdd}
               className="flex items-center gap-2 bg-gold text-cream text-xs font-semibold px-4 py-2 rounded-full hover:bg-gold-light transition-colors"
             >
-              <ShoppingBag size={13} /> Add
+              <ShoppingBag size={13} /> {t('badge_add')}
             </button>
           </div>
         </div>

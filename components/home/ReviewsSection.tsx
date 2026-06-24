@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { collection, addDoc, getDocs, query, where, orderBy, limit, serverTimestamp } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
+import { useLang } from '@/contexts/LanguageContext'
 
 interface Review {
   id?: string
@@ -104,6 +105,7 @@ function formatDate(createdAt: { seconds: number } | null | undefined): string {
 }
 
 export function ReviewsSection() {
+  const { t } = useLang()
   const [reviews, setReviews] = useState<Review[]>([])
   const [loading, setLoading] = useState(true)
   const [modalOpen, setModalOpen] = useState(false)
@@ -164,9 +166,9 @@ export function ReviewsSection() {
     e.preventDefault()
     setFormError('')
 
-    if (!formName.trim()) { setFormError('Please enter your name.'); return }
-    if (formRating === 0) { setFormError('Please select a star rating.'); return }
-    if (!formText.trim()) { setFormError('Please write your review.'); return }
+    if (!formName.trim()) { setFormError(t('rev_err_name')); return }
+    if (formRating === 0) { setFormError(t('rev_err_rating')); return }
+    if (!formText.trim()) { setFormError(t('rev_err_text')); return }
 
     setFormSubmitting(true)
 
@@ -189,7 +191,7 @@ export function ReviewsSection() {
       setFormSuccess(true)
       setTimeout(() => setModalOpen(false), 2000)
     } catch {
-      setFormError('Something went wrong. Please try again.')
+      setFormError(t('rev_err_generic'))
     } finally {
       setFormSubmitting(false)
     }
@@ -201,11 +203,11 @@ export function ReviewsSection() {
         <div className="max-w-5xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
-            <p className="text-xs tracking-widest uppercase text-gold mb-3">Customer Reviews</p>
+            <p className="text-xs tracking-widest uppercase text-gold mb-3">{t('rev_label')}</p>
             <h2 className="font-playfair text-3xl sm:text-4xl text-brown mb-3">
-              What Our Customers Say
+              {t('rev_heading')}
             </h2>
-            <p className="text-brown-light text-sm">Real reviews from real customers in Amman</p>
+            <p className="text-brown-light text-sm">{t('rev_sub')}</p>
           </div>
 
           {/* Grid */}
@@ -242,7 +244,7 @@ export function ReviewsSection() {
               onClick={openModal}
               className="border border-gold text-gold font-semibold text-sm px-8 py-3.5 rounded-full hover:bg-gold hover:text-cream transition-colors cursor-pointer"
             >
-              Share Your Experience
+              {t('rev_share')}
             </button>
           </div>
         </div>
@@ -263,7 +265,7 @@ export function ReviewsSection() {
               &times;
             </button>
 
-            <h3 className="font-playfair text-2xl font-bold text-brown mb-6">Leave a Review</h3>
+            <h3 className="font-playfair text-2xl font-bold text-brown mb-6">{t('rev_modal_heading')}</h3>
 
             {formSuccess ? (
               <div className="text-center py-8">
@@ -274,11 +276,11 @@ export function ReviewsSection() {
                 </div>
                 {!db ? (
                   <p className="text-brown-light text-sm leading-relaxed">
-                    Thanks! We&apos;ll reach out via WhatsApp to verify your review.
+                    {t('rev_success_wa')}
                   </p>
                 ) : (
                   <p className="text-brown-light text-sm leading-relaxed">
-                    Thank you! Your review will appear after approval.
+                    {t('rev_success')}
                   </p>
                 )}
               </div>
@@ -287,7 +289,7 @@ export function ReviewsSection() {
                 {/* Name */}
                 <div className="flex flex-col gap-1.5">
                   <label className="text-xs font-semibold text-brown-light uppercase tracking-wide">
-                    Your Name *
+                    {t('rev_name')} *
                   </label>
                   <input
                     type="text"
@@ -302,7 +304,7 @@ export function ReviewsSection() {
                 {/* Rating */}
                 <div className="flex flex-col gap-1.5">
                   <label className="text-xs font-semibold text-brown-light uppercase tracking-wide">
-                    Star Rating *
+                    {t('rev_rating')} *
                   </label>
                   <StarSelector value={formRating} onChange={setFormRating} />
                 </div>
@@ -310,7 +312,7 @@ export function ReviewsSection() {
                 {/* Product */}
                 <div className="flex flex-col gap-1.5">
                   <label className="text-xs font-semibold text-brown-light uppercase tracking-wide">
-                    Which Product?
+                    {t('rev_product')}
                   </label>
                   <select
                     value={formProduct}
@@ -326,13 +328,13 @@ export function ReviewsSection() {
                 {/* Review text */}
                 <div className="flex flex-col gap-1.5">
                   <label className="text-xs font-semibold text-brown-light uppercase tracking-wide">
-                    Your Review *
+                    {t('rev_text')} *
                   </label>
                   <textarea
                     required
                     rows={4}
                     maxLength={300}
-                    placeholder="Tell us about your experience..."
+                    placeholder={t('rev_placeholder')}
                     value={formText}
                     onChange={(e) => setFormText(e.target.value)}
                     className="border border-gold-pale rounded-xl px-4 py-3 text-sm text-brown placeholder:text-taupe/60 focus:outline-none focus:border-gold transition-colors resize-none"
@@ -349,7 +351,7 @@ export function ReviewsSection() {
                   disabled={formSubmitting}
                   className="bg-gold text-cream py-4 rounded-full font-semibold text-sm hover:bg-gold-light transition-colors shadow-lg shadow-gold/20 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed mt-1"
                 >
-                  {formSubmitting ? 'Submitting...' : 'Submit Review'}
+                  {formSubmitting ? t('rev_submitting') : t('rev_submit')}
                 </button>
               </form>
             )}

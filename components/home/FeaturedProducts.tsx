@@ -1,10 +1,14 @@
-﻿﻿import Link from 'next/link'
+'use client'
+
+import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight } from 'lucide-react'
 import { getFeaturedProducts } from '@/lib/products'
 import { StarRating } from '@/components/ui/StarRating'
+import { useLang } from '@/contexts/LanguageContext'
 
 export function FeaturedProducts() {
+  const { t } = useLang()
   const products = getFeaturedProducts()
 
   return (
@@ -16,15 +20,15 @@ export function FeaturedProducts() {
           <div className="inline-flex items-center gap-2 bg-gold-pale border border-gold-pale rounded-full px-4 py-1.5 mb-4">
             <span className="w-1.5 h-1.5 rounded-full bg-gold inline-block" />
             <span className="text-brown text-xs font-bold tracking-widest uppercase">
-              Our Collection
+              {t('feat_label')}
             </span>
             <span className="w-1.5 h-1.5 rounded-full bg-gold inline-block" />
           </div>
           <h2 className="font-playfair text-4xl sm:text-5xl font-bold text-brown">
-            Made to be shared
+            {t('feat_heading')}
           </h2>
           <p className="mt-4 text-brown-light max-w-xl mx-auto leading-relaxed">
-            Every cookie cake is baked fresh when you order — no shortcuts, no compromises.
+            {t('feat_sub')}
           </p>
         </div>
 
@@ -65,7 +69,7 @@ export function FeaturedProducts() {
                     JD {product.price.toFixed(2)}
                   </span>
                   <span className="flex items-center gap-1 text-sm text-gold font-semibold group-hover:gap-2 transition-all">
-                    View <ArrowRight size={14} />
+                    {t('feat_view')} <ArrowRight size={14} />
                   </span>
                 </div>
               </div>
@@ -79,7 +83,7 @@ export function FeaturedProducts() {
             href="/shop"
             className="inline-flex items-center gap-2 border border-gold text-gold px-8 py-3.5 rounded-full font-semibold text-sm hover:bg-gold hover:text-cream transition-colors"
           >
-            View All Cookies <ArrowRight size={16} />
+            {t('feat_cta')} <ArrowRight size={16} />
           </Link>
         </div>
       </div>

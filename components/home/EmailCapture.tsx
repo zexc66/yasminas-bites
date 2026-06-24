@@ -2,14 +2,16 @@
 
 import { useState } from 'react'
 import toast from 'react-hot-toast'
+import { useLang } from '@/contexts/LanguageContext'
 
 export function EmailCapture() {
+  const { t } = useLang()
   const [email, setEmail] = useState('')
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     if (!email.trim()) return
-    toast.success("You're in! Check your inbox for your discount code. 🎉")
+    toast.success("You're in! Check your inbox for your discount code.")
     setEmail('')
   }
 
@@ -18,17 +20,17 @@ export function EmailCapture() {
       <div className="max-w-2xl mx-auto text-center">
         {/* Label */}
         <p className="text-xs tracking-widest uppercase text-gold-pale/80 mb-4">
-          Join the family
+          {t('email_label')}
         </p>
 
         {/* Heading */}
         <h2 className="font-playfair text-3xl sm:text-4xl font-bold text-cream mb-4">
-          Get 10% off your first order
+          {t('email_heading')}
         </h2>
 
         {/* Subtext */}
         <p className="text-cream/80 text-sm sm:text-base leading-relaxed mb-8">
-          Be the first to hear about new flavours, seasonal specials, and exclusive offers.
+          {t('email_sub')}
         </p>
 
         {/* Form */}
@@ -40,7 +42,7 @@ export function EmailCapture() {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="Your email address"
+            placeholder={t('email_placeholder')}
             required
             className="flex-1 px-5 py-3 rounded-full bg-cream/20 text-cream placeholder-cream/50 border border-cream/30 focus:outline-none focus:border-cream transition-colors"
           />
@@ -48,7 +50,7 @@ export function EmailCapture() {
             type="submit"
             className="px-7 py-3 rounded-full bg-cream text-gold font-semibold hover:bg-cream-dark transition-colors cursor-pointer whitespace-nowrap"
           >
-            Claim my 10%
+            {t('email_cta')}
           </button>
         </form>
       </div>

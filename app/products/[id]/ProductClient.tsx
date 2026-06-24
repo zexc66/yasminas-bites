@@ -8,6 +8,7 @@ import { ShoppingBag, Star, MessageCircle } from 'lucide-react'
 import { useCart } from '@/lib/cartStore'
 import { Product } from '@/types'
 import { products } from '@/lib/products'
+import { useLang } from '@/contexts/LanguageContext'
 import toast from 'react-hot-toast'
 import { whatsappOrderUrl } from '@/lib/whatsapp'
 
@@ -33,6 +34,7 @@ const mockReviews = [
 ]
 
 export function ProductClient({ product }: { product: Product }) {
+  const { t } = useLang()
   const addItem = useCart((s) => s.addItem)
   const [qty, setQty] = useState(1)
 
@@ -80,7 +82,7 @@ export function ProductClient({ product }: { product: Product }) {
               {[...Array(5)].map((_, i) => (
                 <Star key={i} size={16} className="fill-gold text-gold" />
               ))}
-              <span className="text-sm text-brown-light ml-2">Freshly baked</span>
+              <span className="text-sm text-brown-light ml-2">{t('pd_fresh')}</span>
             </div>
 
             <div>
@@ -94,7 +96,7 @@ export function ProductClient({ product }: { product: Product }) {
 
             {/* Quantity */}
             <div className="flex items-center gap-4">
-              <span className="text-sm font-medium text-brown">Quantity</span>
+              <span className="text-sm font-medium text-brown">{t('pd_quantity')}</span>
               <div className="flex items-center border border-gold-pale rounded-full overflow-hidden">
                 <button
                   onClick={() => setQty((q) => Math.max(1, q - 1))}
@@ -118,7 +120,7 @@ export function ProductClient({ product }: { product: Product }) {
               className="flex items-center justify-center gap-3 bg-gold text-cream py-4 rounded-full font-semibold hover:bg-gold-light transition-colors shadow-lg shadow-gold/20 text-sm cursor-pointer"
             >
               <ShoppingBag size={18} />
-              Add to Cart · JD {(product.price * qty).toFixed(2)}
+              {t('add_to_cart')} · JD {(product.price * qty).toFixed(2)}
             </button>
 
             {/* WhatsApp order button */}
@@ -129,12 +131,12 @@ export function ProductClient({ product }: { product: Product }) {
               className="flex items-center justify-center gap-3 bg-[#25D366] text-white py-4 rounded-full font-semibold hover:bg-[#20b858] transition-colors shadow-md text-sm cursor-pointer"
             >
               <MessageCircle size={18} />
-              Order via WhatsApp
+              {t('order_wa')}
             </a>
 
             {/* Badges */}
             <div className="flex flex-wrap gap-3 pt-2">
-              {['Baked fresh to order', 'Premium ingredients', 'Free gift wrap'].map((b) => (
+              {([t('pd_badge1'), t('pd_badge2'), t('pd_badge3')] as string[]).map((b) => (
                 <span
                   key={b}
                   className="text-xs bg-gold-pale text-brown px-3 py-1.5 rounded-full font-medium"
@@ -148,7 +150,7 @@ export function ProductClient({ product }: { product: Product }) {
 
         {/* Reviews section */}
         <section className="mt-20">
-          <h2 className="font-playfair text-2xl text-brown mb-8">What people are saying</h2>
+          <h2 className="font-playfair text-2xl text-brown mb-8">{t('testimonials_label')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {mockReviews.map((review) => (
               <div key={review.name} className="bg-cream-dark rounded-2xl p-5">
@@ -174,7 +176,7 @@ export function ProductClient({ product }: { product: Product }) {
 
         {/* Related products */}
         <section className="mt-20">
-          <h2 className="font-playfair text-2xl text-brown mb-8">You might also like</h2>
+          <h2 className="font-playfair text-2xl text-brown mb-8">{t('pd_related')}</h2>
           <div className="grid grid-cols-3 gap-4 sm:gap-6">
             {related.map((p) => (
               <Link key={p.id} href={`/products/${p.id}`} className="group">
@@ -208,7 +210,7 @@ export function ProductClient({ product }: { product: Product }) {
           className="flex items-center gap-2 bg-gold text-cream px-6 py-3 rounded-full font-semibold text-sm hover:bg-gold-light transition-colors cursor-pointer"
         >
           <ShoppingBag size={16} />
-          Add to Bag
+          {t('pd_add_bag')}
         </button>
       </div>
     </>

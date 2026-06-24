@@ -3,23 +3,21 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X } from 'lucide-react'
-
-const MESSAGES = [
-  'Free delivery on orders over JD 20 across Amman',
-  'Order before 2pm for same-day delivery',
-  "Valentine's special — Pop Cakes now available",
-]
+import { useLang } from '@/contexts/LanguageContext'
 
 export function AnnouncementBar() {
+  const { t } = useLang()
   const [dismissed, setDismissed] = useState(false)
   const [index, setIndex] = useState(0)
 
+  const messages = [t('ann_1'), t('ann_2'), t('ann_3')]
+
   useEffect(() => {
     const id = setInterval(() => {
-      setIndex((i) => (i + 1) % MESSAGES.length)
+      setIndex((i) => (i + 1) % messages.length)
     }, 4000)
     return () => clearInterval(id)
-  }, [])
+  }, [messages.length])
 
   if (dismissed) return null
 
@@ -35,7 +33,7 @@ export function AnnouncementBar() {
             transition={{ duration: 0.35 }}
             className="text-cream text-xs font-medium tracking-wide text-center whitespace-nowrap"
           >
-            {MESSAGES[index]}
+            {messages[index]}
           </motion.p>
         </AnimatePresence>
       </div>

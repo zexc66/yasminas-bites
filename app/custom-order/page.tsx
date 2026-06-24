@@ -16,6 +16,8 @@ import {
 } from 'lucide-react'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
+import { useLang } from '@/contexts/LanguageContext'
+import { TranslationKey } from '@/lib/i18n'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -79,20 +81,20 @@ const BASE_OPTIONS: BaseOption[] = [
   },
 ]
 
-const OCCASIONS = [
-  'Birthday',
-  'Anniversary',
-  "Valentine's",
-  'Eid',
-  'Corporate',
-  'Just Because',
-  'Other',
+const OCCASION_KEYS: { value: string; key: TranslationKey }[] = [
+  { value: 'Birthday', key: 'co_occ_birthday' },
+  { value: 'Anniversary', key: 'co_occ_anniversary' },
+  { value: "Valentine's", key: 'co_occ_valentine' },
+  { value: 'Eid', key: 'co_occ_eid' },
+  { value: 'Corporate', key: 'co_occ_corporate' },
+  { value: 'Just Because', key: 'co_occ_just' },
+  { value: 'Other', key: 'co_occ_other' },
 ]
 
-const SIZES = [
-  { id: 'small',  label: 'Small',  detail: 'Feeds 4–6' },
-  { id: 'medium', label: 'Medium', detail: 'Feeds 8–10' },
-  { id: 'large',  label: 'Large',  detail: 'Feeds 12–15' },
+const SIZE_KEYS: { id: string; labelKey: TranslationKey; detailKey: TranslationKey }[] = [
+  { id: 'small',  labelKey: 'co_sz_small',  detailKey: 'co_sz_small_d' },
+  { id: 'medium', labelKey: 'co_sz_medium', detailKey: 'co_sz_medium_d' },
+  { id: 'large',  labelKey: 'co_sz_large',  detailKey: 'co_sz_large_d' },
 ]
 
 const AREAS = [
@@ -105,17 +107,17 @@ const AREAS = [
   'Other',
 ]
 
-const TIME_SLOTS = [
-  { id: 'morning',   label: 'Morning',   detail: '9 am – 12 pm' },
-  { id: 'afternoon', label: 'Afternoon', detail: '12 pm – 4 pm' },
-  { id: 'evening',   label: 'Evening',   detail: '4 pm – 8 pm' },
+const TIME_KEYS: { id: string; labelKey: TranslationKey; detailKey: TranslationKey }[] = [
+  { id: 'morning',   labelKey: 'co_morning',   detailKey: 'co_morning_h' },
+  { id: 'afternoon', labelKey: 'co_afternoon', detailKey: 'co_afternoon_h' },
+  { id: 'evening',   labelKey: 'co_evening',   detailKey: 'co_evening_h' },
 ]
 
-const STEP_META = [
-  { title: 'Choose Your Base',    subtitle: 'Pick the perfect foundation for your creation' },
-  { title: 'Occasion & Size',     subtitle: 'Tell us who this is for and how many to feed' },
-  { title: 'Delivery Details',    subtitle: 'When and where should we bring your order?' },
-  { title: 'Review & Send',       subtitle: 'Confirm everything looks perfect before sending' },
+const STEP_KEYS: { titleKey: TranslationKey; subtitleKey: TranslationKey }[] = [
+  { titleKey: 'co_s1_title', subtitleKey: 'co_s1_sub' },
+  { titleKey: 'co_s2_title', subtitleKey: 'co_s2_sub' },
+  { titleKey: 'co_s3_title', subtitleKey: 'co_s3_sub' },
+  { titleKey: 'co_s4_title', subtitleKey: 'co_s4_sub' },
 ]
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -128,45 +130,41 @@ function getTomorrow(): string {
 
 function buildWhatsAppMessage(order: OrderState): string {
   const base = BASE_OPTIONS.find((b) => b.id === order.base)
-  const size = SIZES.find((s) => s.id === order.size)
-  const time = TIME_SLOTS.find((t) => t.id === order.preferredTime)
+  const sizeObj = SIZE_KEYS.find((s) => s.id === order.size)
+  const timeObj = TIME_KEYS.find((t) => t.id === order.preferredTime)
 
   const rawLines: string[] = [
     "Hello Yasmina's Bites! I'd like to place a custom order:",
     '',
     `*Base:* ${base?.name ?? ''} — ${base?.price ?? ''}`,
     `*Occasion:* ${order.occasion}`,
-    order.size ? `*Size:* ${size?.label} (${size?.detail})` : '',
+    order.size ? `*Size:* ${sizeObj?.id ?? ''} (${sizeObj?.id ?? ''})` : '',
     order.giftMessage ? `*Gift Message:* ${order.giftMessage}` : '',
     '',
     `*Delivery:* ${order.deliveryType === 'pickup' ? 'Pickup' : 'Delivery — Amman'}`,
-    order.deliveryType === 'delivery' && order.area
-      ? `*Area:* ${order.area}`
-      : '',
-    order.deliveryType === 'delivery' && order.address
-      ? `*Address:* ${order.address}`
-      : '',
+    order.deliveryType === 'delivery' && order.area ? `*Area:* ${order.area}` : '',
+    order.deliveryType === 'delivery' && order.address ? `*Address:* ${order.address}` : '',
     `*Date:* ${order.preferredDate}`,
-    order.preferredTime ? `*Time:* ${time?.label} (${time?.detail})` : '',
+    order.preferredTime ? `*Time:* ${timeObj?.id ?? ''} (${timeObj?.id ?? ''})` : '',
     '',
     'Thank you!',
   ]
 
-  // Collapse consecutive empty lines
   const lines = rawLines
     .filter((l, i) => !(l === '' && rawLines[i - 1] === ''))
     .join('\n')
 
   return `https://wa.me/962789006574?text=${encodeURIComponent(lines)}`
-
 }
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
 function ProgressBar({ step }: { step: number }) {
+  const { t } = useLang()
+
   return (
     <div className="flex items-center gap-0 mb-10">
-      {STEP_META.map((meta, i) => {
+      {STEP_KEYS.map((meta, i) => {
         const num      = i + 1
         const done     = num < step
         const current  = num === step
@@ -191,12 +189,12 @@ function ProgressBar({ step }: { step: number }) {
                   done || current ? 'text-gold' : 'text-taupe'
                 }`}
               >
-                {meta.title.split(' ')[0]}
+                {t(meta.titleKey).split(' ')[0]}
               </span>
             </div>
 
             {/* Connector */}
-            {i < STEP_META.length - 1 && (
+            {i < STEP_KEYS.length - 1 && (
               <div className="flex-1 h-0.5 mx-1 relative overflow-hidden bg-gold-pale rounded-full">
                 <motion.div
                   className="absolute inset-y-0 left-0 bg-gold rounded-full"
@@ -305,6 +303,7 @@ function Step2({
   setOrder: (o: OrderState) => void
   errors: Record<string, string>
 }) {
+  const { t } = useLang()
   const isSurprise = order.base === 'surprise'
 
   return (
@@ -312,16 +311,16 @@ function Step2({
       {/* Occasion chips */}
       <div>
         <label className="block text-sm font-semibold text-brown mb-3">
-          What&apos;s the occasion? <span className="text-red-500">*</span>
+          {t('co_occasion_q')} <span className="text-red-500">*</span>
         </label>
         <div className="flex flex-wrap gap-2">
-          {OCCASIONS.map((occ) => {
-            const selected = order.occasion === occ
+          {OCCASION_KEYS.map((occ) => {
+            const selected = order.occasion === occ.value
             return (
               <button
-                key={occ}
+                key={occ.value}
                 type="button"
-                onClick={() => setOrder({ ...order, occasion: occ })}
+                onClick={() => setOrder({ ...order, occasion: occ.value })}
                 className={`px-4 py-2 rounded-full text-sm font-medium border-2 transition-all duration-150 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold ${
                   selected
                     ? 'border-gold bg-gold text-cream shadow-sm'
@@ -329,7 +328,7 @@ function Step2({
                 }`}
                 aria-pressed={selected}
               >
-                {occ}
+                {t(occ.key)}
               </button>
             )
           })}
@@ -343,10 +342,10 @@ function Step2({
       {!isSurprise && order.base !== 'pop-cakes' && (
         <div>
           <label className="block text-sm font-semibold text-brown mb-3">
-            Size <span className="text-red-500">*</span>
+            {t('co_size_label')} <span className="text-red-500">*</span>
           </label>
           <div className="grid grid-cols-3 gap-3">
-            {SIZES.map((sz) => {
+            {SIZE_KEYS.map((sz) => {
               const selected = order.size === sz.id
               return (
                 <button
@@ -365,9 +364,9 @@ function Step2({
                       selected ? 'text-gold' : 'text-brown'
                     }`}
                   >
-                    {sz.label}
+                    {t(sz.labelKey)}
                   </p>
-                  <p className="text-xs text-brown-light mt-0.5">{sz.detail}</p>
+                  <p className="text-xs text-brown-light mt-0.5">{t(sz.detailKey)}</p>
                 </button>
               )
             })}
@@ -385,8 +384,8 @@ function Step2({
           className="block text-sm font-semibold text-brown mb-2"
         >
           <MessageSquare size={14} className="inline mr-1.5 text-taupe" aria-hidden />
-          Add a gift message{' '}
-          <span className="font-normal text-taupe">(optional)</span>
+          {t('co_gift_msg')}{' '}
+          <span className="font-normal text-taupe">{t('co_optional')}</span>
         </label>
         <textarea
           id="gift-message"
@@ -394,7 +393,7 @@ function Step2({
           maxLength={200}
           value={order.giftMessage}
           onChange={(e) => setOrder({ ...order, giftMessage: e.target.value })}
-          placeholder="e.g. Happy Birthday Sarah! Wishing you the sweetest day..."
+          placeholder={t('co_gift_ph')}
           className="w-full px-4 py-3 rounded-xl border-2 border-gold-pale/60 bg-cream text-brown text-sm placeholder:text-taupe focus:outline-none focus:border-gold transition-colors duration-150 resize-none"
         />
         <p className="mt-1 text-xs text-taupe text-right">
@@ -416,18 +415,20 @@ function Step3({
   setOrder: (o: OrderState) => void
   errors: Record<string, string>
 }) {
+  const { t } = useLang()
+
   return (
     <div className="space-y-8">
       {/* Delivery type */}
       <div>
         <label className="block text-sm font-semibold text-brown mb-3">
-          How will you receive your order? <span className="text-red-500">*</span>
+          {t('co_how_receive')} <span className="text-red-500">*</span>
         </label>
         <div className="grid grid-cols-2 gap-3">
           {(['pickup', 'delivery'] as const).map((type) => {
             const selected = order.deliveryType === type
-            const label    = type === 'pickup' ? 'Pickup' : 'Delivery (Amman)'
-            const hint     = type === 'pickup' ? 'Collect yourself' : 'We bring it to you'
+            const label    = type === 'pickup' ? t('co_pickup') : t('co_delivery_amman')
+            const hint     = type === 'pickup' ? t('co_pickup_hint') : t('co_delivery_hint')
             return (
               <button
                 key={type}
@@ -470,7 +471,7 @@ function Step3({
               className="block text-sm font-semibold text-brown mb-2"
             >
               <MapPin size={14} className="inline mr-1.5 text-taupe" aria-hidden />
-              Area <span className="text-red-500">*</span>
+              {t('co_area')} <span className="text-red-500">*</span>
             </label>
             <select
               id="area"
@@ -478,7 +479,7 @@ function Step3({
               onChange={(e) => setOrder({ ...order, area: e.target.value })}
               className="w-full px-4 py-3 rounded-xl border-2 border-gold-pale/60 bg-cream text-brown text-sm focus:outline-none focus:border-gold transition-colors duration-150 cursor-pointer appearance-none"
             >
-              <option value="">Select your area...</option>
+              <option value="">{t('co_select_area')}</option>
               {AREAS.map((a) => (
                 <option key={a} value={a}>
                   {a}
@@ -496,14 +497,14 @@ function Step3({
               htmlFor="address"
               className="block text-sm font-semibold text-brown mb-2"
             >
-              Full Address <span className="text-red-500">*</span>
+              {t('co_address')} <span className="text-red-500">*</span>
             </label>
             <input
               id="address"
               type="text"
               value={order.address}
               onChange={(e) => setOrder({ ...order, address: e.target.value })}
-              placeholder="Building, street, nearby landmark..."
+              placeholder={t('co_address_ph')}
               className="w-full px-4 py-3 rounded-xl border-2 border-gold-pale/60 bg-cream text-brown text-sm placeholder:text-taupe focus:outline-none focus:border-gold transition-colors duration-150"
             />
             {errors.address && (
@@ -520,7 +521,7 @@ function Step3({
           className="block text-sm font-semibold text-brown mb-2"
         >
           <CalendarDays size={14} className="inline mr-1.5 text-taupe" aria-hidden />
-          Preferred Date <span className="text-red-500">*</span>
+          {t('co_date')} <span className="text-red-500">*</span>
         </label>
         <input
           id="preferred-date"
@@ -538,10 +539,10 @@ function Step3({
       {/* Preferred time */}
       <div>
         <label className="block text-sm font-semibold text-brown mb-3">
-          Preferred Time <span className="text-red-500">*</span>
+          {t('co_time_label')} <span className="text-red-500">*</span>
         </label>
         <div className="grid grid-cols-3 gap-3">
-          {TIME_SLOTS.map((slot) => {
+          {TIME_KEYS.map((slot) => {
             const selected = order.preferredTime === slot.id
             return (
               <button
@@ -560,9 +561,9 @@ function Step3({
                     selected ? 'text-gold' : 'text-brown'
                   }`}
                 >
-                  {slot.label}
+                  {t(slot.labelKey)}
                 </p>
-                <p className="text-xs text-brown-light mt-0.5">{slot.detail}</p>
+                <p className="text-xs text-brown-light mt-0.5">{t(slot.detailKey)}</p>
               </button>
             )
           })}
@@ -588,9 +589,10 @@ function ReviewRow({ label, value }: { label: string; value: string }) {
 }
 
 function Step4({ order }: { order: OrderState }) {
+  const { t } = useLang()
   const base = BASE_OPTIONS.find((b) => b.id === order.base)
-  const size = SIZES.find((s) => s.id === order.size)
-  const time = TIME_SLOTS.find((t) => t.id === order.preferredTime)
+  const sizeObj = SIZE_KEYS.find((s) => s.id === order.size)
+  const timeObj = TIME_KEYS.find((ti) => ti.id === order.preferredTime)
 
   return (
     <div>
@@ -598,41 +600,44 @@ function Step4({ order }: { order: OrderState }) {
         {/* Header */}
         <div className="bg-gold-pale/30 px-6 py-4 border-b border-gold/20">
           <p className="font-playfair text-lg font-semibold text-brown">
-            Your Custom Order
+            {t('co_review_title')}
           </p>
           <p className="text-xs text-brown-light mt-0.5">
-            Review your selections before sending
+            {t('co_review_sub')}
           </p>
         </div>
 
         {/* Rows */}
         <div className="px-6 py-2">
-          <ReviewRow label="Base"        value={`${base?.name ?? ''} — ${base?.price ?? ''}`} />
-          <ReviewRow label="Occasion"    value={order.occasion} />
-          {size && <ReviewRow label="Size" value={`${size.label} (${size.detail})`} />}
+          <ReviewRow label={t('co_row_base')}     value={`${base?.name ?? ''} — ${base?.price ?? ''}`} />
+          <ReviewRow label={t('co_row_occasion')} value={order.occasion} />
+          {sizeObj && (
+            <ReviewRow label={t('co_row_size')} value={`${t(sizeObj.labelKey)} (${t(sizeObj.detailKey)})`} />
+          )}
           {order.giftMessage && (
-            <ReviewRow label="Gift Message" value={`"${order.giftMessage}"`} />
+            <ReviewRow label={t('co_row_gift')} value={`"${order.giftMessage}"`} />
           )}
           <ReviewRow
-            label="Delivery"
+            label={t('co_row_delivery')}
             value={
               order.deliveryType === 'pickup'
-                ? 'Pickup'
-                : `Delivery — ${order.area ? order.area + ', ' : ''}Amman`
+                ? t('co_row_pickup')
+                : `${t('co_row_delivery_amman')}${order.area ? ' — ' + order.area : ''}`
             }
           />
           {order.deliveryType === 'delivery' && order.address && (
-            <ReviewRow label="Address" value={order.address} />
+            <ReviewRow label={t('co_row_address')} value={order.address} />
           )}
-          <ReviewRow label="Date"  value={order.preferredDate} />
-          {time && <ReviewRow label="Time" value={`${time.label} (${time.detail})`} />}
+          <ReviewRow label={t('co_row_date')} value={order.preferredDate} />
+          {timeObj && (
+            <ReviewRow label={t('co_row_time')} value={`${t(timeObj.labelKey)} (${t(timeObj.detailKey)})`} />
+          )}
         </div>
       </div>
 
       {/* Note */}
       <p className="mt-5 text-xs text-center text-brown-light leading-relaxed px-4">
-        Tapping &ldquo;Send via WhatsApp&rdquo; will open WhatsApp with your
-        order pre-filled. Yasmina will confirm availability and pricing shortly.
+        {t('co_send_note')}
       </p>
     </div>
   )
@@ -658,6 +663,7 @@ const slideVariants = {
 }
 
 export default function CustomOrderPage() {
+  const { t } = useLang()
   const [step, setStep]   = useState(1)
   const [dir, setDir]     = useState(1)
   const [errors, setErrors] = useState<Record<string, string>>({})
@@ -680,27 +686,26 @@ export default function CustomOrderPage() {
     const errs: Record<string, string> = {}
 
     if (currentStep === 1) {
-      if (!order.base) errs.base = 'Please choose a base to continue.'
+      if (!order.base) errs.base = t('co_err_base')
     }
 
     if (currentStep === 2) {
-      if (!order.occasion) errs.occasion = 'Please pick an occasion.'
-      // Size required only when not surprise/pop-cakes
+      if (!order.occasion) errs.occasion = t('co_err_occasion')
       if (
         order.base !== 'surprise' &&
         order.base !== 'pop-cakes' &&
         !order.size
       ) {
-        errs.size = 'Please select a size.'
+        errs.size = t('co_err_size')
       }
     }
 
     if (currentStep === 3) {
-      if (!order.preferredDate) errs.preferredDate = 'Please choose a date.'
-      if (!order.preferredTime) errs.preferredTime = 'Please select a time slot.'
+      if (!order.preferredDate) errs.preferredDate = t('co_err_date')
+      if (!order.preferredTime) errs.preferredTime = t('co_err_time')
       if (order.deliveryType === 'delivery') {
-        if (!order.area)    errs.area    = 'Please select your area.'
-        if (!order.address) errs.address = 'Please enter your address.'
+        if (!order.area)    errs.area    = t('co_err_area')
+        if (!order.address) errs.address = t('co_err_address')
       }
     }
 
@@ -725,7 +730,7 @@ export default function CustomOrderPage() {
     window.open(buildWhatsAppMessage(order), '_blank', 'noopener,noreferrer')
   }
 
-  const meta = STEP_META[step - 1]
+  const meta = STEP_KEYS[step - 1]
 
   return (
     <>
@@ -738,13 +743,13 @@ export default function CustomOrderPage() {
           <div className="text-center mb-10">
             <div className="inline-flex items-center gap-2 bg-gold-pale/50 border border-gold-pale text-gold-light text-xs font-semibold px-4 py-1.5 rounded-full mb-4">
               <Cake size={13} aria-hidden />
-              Custom Order Builder
+              {t('co_label')}
             </div>
             <h1 className="font-playfair text-3xl sm:text-4xl font-bold text-brown leading-tight">
-              Build Your Perfect Cake
+              {t('co_heading')}
             </h1>
             <p className="text-brown-light text-sm mt-2 max-w-sm mx-auto">
-              Every order is handcrafted fresh just for you
+              {t('co_sub')}
             </p>
           </div>
 
@@ -761,10 +766,10 @@ export default function CustomOrderPage() {
                   {step}
                 </span>
                 <h2 className="font-playfair text-xl font-semibold text-brown">
-                  {meta.title}
+                  {t(meta.titleKey)}
                 </h2>
               </div>
-              <p className="text-sm text-brown-light ml-8">{meta.subtitle}</p>
+              <p className="text-sm text-brown-light ml-8">{t(meta.subtitleKey)}</p>
             </div>
 
             {/* Animated step content */}
@@ -815,7 +820,7 @@ export default function CustomOrderPage() {
                   className="flex items-center gap-1.5 px-5 py-2.5 rounded-xl border-2 border-gold-pale text-brown-light text-sm font-medium hover:border-gold hover:text-brown transition-all duration-150 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold"
                 >
                   <ChevronLeft size={16} aria-hidden />
-                  Back
+                  {t('co_back')}
                 </button>
               ) : (
                 <div />
@@ -828,7 +833,7 @@ export default function CustomOrderPage() {
                   onClick={goNext}
                   className="flex items-center gap-1.5 px-7 py-2.5 rounded-xl bg-gold text-cream text-sm font-semibold hover:bg-gold-light transition-all duration-150 cursor-pointer shadow-sm hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold"
                 >
-                  Next
+                  {t('co_next')}
                   <ChevronRight size={16} aria-hidden />
                 </button>
               ) : (
@@ -838,7 +843,7 @@ export default function CustomOrderPage() {
                   className="flex items-center gap-2 px-7 py-2.5 rounded-xl bg-[#25D366] text-white text-sm font-semibold hover:bg-[#22c55e] transition-all duration-150 cursor-pointer shadow-sm hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#25D366]"
                 >
                   <Send size={15} aria-hidden />
-                  Send Order via WhatsApp
+                  {t('co_send')}
                 </button>
               )}
             </div>
@@ -846,8 +851,8 @@ export default function CustomOrderPage() {
 
           {/* Trust note */}
           <p className="mt-6 text-center text-xs text-taupe leading-relaxed">
-            Orders are confirmed via WhatsApp within a few hours.{' '}
-            <span className="text-brown-light">No payment is collected here.</span>
+            {t('co_note')}{' '}
+            <span className="text-brown-light">{t('co_no_payment')}</span>
           </p>
         </div>
       </main>

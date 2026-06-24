@@ -1,12 +1,14 @@
-﻿﻿'use client'
+'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, ShoppingBag, Trash2, Plus, Minus } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useCart } from '@/lib/cartStore'
+import { useLang } from '@/contexts/LanguageContext'
 
 export function CartDrawer() {
+  const { t } = useLang()
   const { isCartOpen, closeCart, items, removeItem, updateQuantity, subtotal } = useCart()
   const count = items.reduce((s, i) => s + i.quantity, 0)
 
@@ -37,9 +39,9 @@ export function CartDrawer() {
             <div className="flex items-center justify-between px-6 py-5 border-b border-gold-pale">
               <div className="flex items-center gap-2">
                 <ShoppingBag size={20} className="text-gold" />
-                <h2 className="font-playfair text-xl font-bold text-brown">Your Bag</h2>
+                <h2 className="font-playfair text-xl font-bold text-brown">{t('cart_title')}</h2>
                 {count > 0 && (
-                  <span className="text-sm text-brown-light">({count} items)</span>
+                  <span className="text-sm text-brown-light">({count} {t('cart_page_heading').toLowerCase()})</span>
                 )}
               </div>
               <button
@@ -58,9 +60,9 @@ export function CartDrawer() {
                 <div className="flex flex-col items-center justify-center h-full gap-4 text-center">
                   <ShoppingBag size={48} className="text-gold-pale" />
                   <div>
-                    <p className="font-medium text-brown">Your bag is empty</p>
+                    <p className="font-medium text-brown">{t('cart_empty')}</p>
                     <p className="text-sm text-brown-light mt-1">
-                      Add some delicious cookie cakes!
+                      {t('cart_empty_sub')}
                     </p>
                   </div>
                   <Link
@@ -68,7 +70,7 @@ export function CartDrawer() {
                     onClick={closeCart}
                     className="mt-2 px-6 py-2.5 bg-gold text-cream rounded-full text-sm font-medium hover:bg-gold/90 transition-colors"
                   >
-                    Shop Now
+                    {t('nav_shop')}
                   </Link>
                 </div>
               ) : (
@@ -93,7 +95,7 @@ export function CartDrawer() {
                       <div className="flex-1 min-w-0">
                         <p className="font-medium text-brown text-sm truncate">{product.name}</p>
                         <p className="text-xs text-brown-light mt-0.5">
-                          JD {product.price.toFixed(2)} each
+                          JD {product.price.toFixed(2)} {t('cart_each')}
                         </p>
 
                         {/* Quantity controls */}
@@ -141,13 +143,13 @@ export function CartDrawer() {
             {items.length > 0 && (
               <div className="border-t border-gold-pale bg-cream px-6 py-5">
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-sm font-medium text-brown">Subtotal</span>
+                  <span className="text-sm font-medium text-brown">{t('cart_subtotal')}</span>
                   <span className="text-base font-bold text-gold">
                     JD {subtotal().toFixed(2)}
                   </span>
                 </div>
                 <p className="text-xs text-brown-light mb-4">
-                  Shipping calculated at checkout
+                  {t('cart_shipping')}
                 </p>
 
                 <Link
@@ -155,14 +157,14 @@ export function CartDrawer() {
                   onClick={closeCart}
                   className="block w-full bg-gold text-cream text-center rounded-full py-3.5 font-medium hover:bg-gold/90 transition-colors"
                 >
-                  Checkout
+                  {t('cart_checkout')}
                 </Link>
 
                 <button
                   onClick={closeCart}
                   className="w-full border border-gold text-gold rounded-full py-3 mt-2 text-sm font-medium hover:bg-gold/5 transition-colors cursor-pointer"
                 >
-                  Continue Shopping
+                  {t('cart_continue')}
                 </button>
               </div>
             )}

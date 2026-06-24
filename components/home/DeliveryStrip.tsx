@@ -2,29 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { Truck, ChefHat, Gift, ShieldCheck } from 'lucide-react'
-
-const tiles = [
-  {
-    icon: <Truck size={36} className="text-gold" />,
-    title: 'Amman Delivery',
-    subtitle: 'Fast delivery across Amman',
-  },
-  {
-    icon: <ChefHat size={36} className="text-gold" />,
-    title: 'Freshly Baked',
-    subtitle: 'Made to order, never pre-made',
-  },
-  {
-    icon: <Gift size={36} className="text-gold" />,
-    title: 'Gift Wrapping',
-    subtitle: 'Free gift wrap with every order',
-  },
-  {
-    icon: <ShieldCheck size={36} className="text-gold" />,
-    title: 'Safe Checkout',
-    subtitle: 'Stripe & PayPal secured',
-  },
-]
+import { useLang } from '@/contexts/LanguageContext'
 
 const containerVariants = {
   hidden: {},
@@ -45,6 +23,31 @@ const itemVariants = {
 }
 
 export function DeliveryStrip() {
+  const { t } = useLang()
+
+  const tiles = [
+    {
+      icon: <Truck size={36} className="text-gold" />,
+      title: t('ds_delivery_title'),
+      subtitle: t('ds_delivery_sub'),
+    },
+    {
+      icon: <ChefHat size={36} className="text-gold" />,
+      title: t('ds_baked_title'),
+      subtitle: t('ds_baked_sub'),
+    },
+    {
+      icon: <Gift size={36} className="text-gold" />,
+      title: t('ds_gift_title'),
+      subtitle: t('ds_gift_sub'),
+    },
+    {
+      icon: <ShieldCheck size={36} className="text-gold" />,
+      title: t('ds_secure_title'),
+      subtitle: t('ds_secure_sub'),
+    },
+  ]
+
   return (
     <section className="bg-cream py-16 px-6">
       <motion.div

@@ -4,12 +4,14 @@ import { useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthContext'
+import { useLang } from '@/contexts/LanguageContext'
 import { Navbar }  from '@/components/layout/Navbar'
 import { Footer }  from '@/components/layout/Footer'
 import { ShoppingBag, LogOut, User } from 'lucide-react'
 import toast from 'react-hot-toast'
 
 export default function AccountPage() {
+  const { t } = useLang()
   const { user, loading, logout } = useAuth()
   const router = useRouter()
 
@@ -38,7 +40,7 @@ export default function AccountPage() {
             </div>
             <div>
               <h1 className="font-playfair text-2xl font-bold text-brown">
-                {user.displayName ?? 'My Account'}
+                {user.displayName ?? t('acc_my_account')}
               </h1>
               <p className="text-sm text-brown-light">{user.email}</p>
             </div>
@@ -54,8 +56,8 @@ export default function AccountPage() {
                 <ShoppingBag size={20} className="text-gold group-hover:text-cream transition-colors" />
               </div>
               <div>
-                <p className="font-semibold text-brown">My Orders</p>
-                <p className="text-xs text-brown-light">Track your orders</p>
+                <p className="font-semibold text-brown">{t('acc_my_orders')}</p>
+                <p className="text-xs text-brown-light">{t('acc_track')}</p>
               </div>
             </Link>
           </div>
@@ -64,7 +66,7 @@ export default function AccountPage() {
             onClick={handleLogout}
             className="flex items-center gap-2 text-sm text-brown-light hover:text-red-500 transition-colors"
           >
-            <LogOut size={16} /> Sign out
+            <LogOut size={16} /> {t('acc_sign_out')}
           </button>
         </div>
       </main>
