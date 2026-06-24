@@ -369,6 +369,19 @@ export const translations = {
     acc_my_orders: 'My Orders',
     acc_track: 'Track your orders',
     acc_sign_out: 'Sign out',
+    // Orders page
+    acc_orders_title: 'My Orders',
+    acc_orders_empty: 'No orders yet. Time to treat yourself!',
+    acc_orders_shop: 'Shop Now',
+    acc_order_no: 'Order #',
+    acc_reorder: 'Reorder',
+    acc_reorder_toast: 'Cart replaced with your previous order',
+    acc_status_pending: 'Pending',
+    acc_status_processing: 'Processing',
+    acc_status_shipped: 'Shipped',
+    acc_status_delivered: 'Delivered',
+    // Reviews
+    rev_be_first: 'Be the first to review this',
   },
   ar: {
     // Navbar
@@ -738,6 +751,19 @@ export const translations = {
     acc_my_orders: 'طلباتي',
     acc_track: 'تتبع طلباتك',
     acc_sign_out: 'تسجيل الخروج',
+    // Orders page
+    acc_orders_title: 'طلباتي',
+    acc_orders_empty: 'لا توجد طلبات بعد. حان وقت الدلع!',
+    acc_orders_shop: 'تسوق الآن',
+    acc_order_no: 'طلب رقم',
+    acc_reorder: 'إعادة الطلب',
+    acc_reorder_toast: 'تم استبدال سلتك بطلبك السابق',
+    acc_status_pending: 'معلق',
+    acc_status_processing: 'قيد التجهيز',
+    acc_status_shipped: 'في الطريق',
+    acc_status_delivered: 'تم التوصيل',
+    // Reviews
+    rev_be_first: 'كن أول من يقيّم هذا المنتج',
   },
 } as const
 
